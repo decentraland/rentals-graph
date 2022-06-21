@@ -96,6 +96,15 @@ export class Rental extends Entity {
     this.set("rentalDays", Value.fromBigInt(value));
   }
 
+  get startedAt(): BigInt {
+    let value = this.get("startedAt");
+    return value!.toBigInt();
+  }
+
+  set startedAt(value: BigInt) {
+    this.set("startedAt", Value.fromBigInt(value));
+  }
+
   get pricePerDay(): BigInt {
     let value = this.get("pricePerDay");
     return value!.toBigInt();
@@ -121,6 +130,15 @@ export class Rental extends Entity {
 
   set ownerHasClaimedAsset(value: boolean) {
     this.set("ownerHasClaimedAsset", Value.fromBoolean(value));
+  }
+
+  get last(): boolean {
+    let value = this.get("last");
+    return value!.toBoolean();
+  }
+
+  set last(value: boolean) {
+    this.set("last", Value.fromBoolean(value));
   }
 }
 
@@ -155,12 +173,12 @@ export class Count extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get rentalsTotal(): BigInt {
-    let value = this.get("rentalsTotal");
+  get value(): BigInt {
+    let value = this.get("value");
     return value!.toBigInt();
   }
 
-  set rentalsTotal(value: BigInt) {
-    this.set("rentalsTotal", Value.fromBigInt(value));
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
   }
 }
