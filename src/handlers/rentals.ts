@@ -6,7 +6,7 @@ import { buildCountForAllRentals, buildCountForRentals } from '../modules/count'
 import { Rental } from '../entities/schema'
 import { OperatorUpdated, RentalStarted, AssetClaimed } from '../entities/Rentals/Rentals'
 
-function buildRentalId(contractAddress: string, tokenId: BigInt, index: BigInt) {
+function buildRentalId(contractAddress: string, tokenId: BigInt, index: BigInt): string {
   return contractAddress + ':' + tokenId.toString() + ':' + index.toString()
 }
 

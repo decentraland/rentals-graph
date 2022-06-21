@@ -8,7 +8,7 @@
     "fix:lint": "npm run check:code -- --fix",
     "fix:prettier": "prettier --write ./src",
     "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
-    "prepare:goerli": "mustache config/ropsten.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "deploy:mainnet": "npm run prepare:mainnet && npx graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/  decentraland/rentals-ethereum-mainnet",
     "deploy:goerli": "npm run prepare:goerli && npx graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/  decentraland/rentals-ethereum-goerli"
   },
