@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prefer-const */
 import { log } from '@graphprotocol/graph-ts'
-import { BigInt } from '@graphprotocol/graph-ts'
 import { getAllRentalsNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
-import { buildRentalId } from '../modules/rentals'
+import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
 import { Rental } from '../entities/schema'
 import { OperatorUpdated, RentalStarted, AssetClaimed } from '../entities/Rentals/Rentals'
-
-let DAY_TIMESTAMP = BigInt.fromI32(24 * 60 * 60)
 
 export function handleRentalStarted(event: RentalStarted): void {
   let contractAddress = event.params._contractAddress.toHexString()
