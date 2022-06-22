@@ -140,15 +140,6 @@ export class Rental extends Entity {
   set ownerHasClaimedAsset(value: boolean) {
     this.set("ownerHasClaimedAsset", Value.fromBoolean(value));
   }
-
-  get last(): boolean {
-    let value = this.get("last");
-    return value!.toBoolean();
-  }
-
-  set last(value: boolean) {
-    this.set("last", Value.fromBoolean(value));
-  }
 }
 
 export class Count extends Entity {

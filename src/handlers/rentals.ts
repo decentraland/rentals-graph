@@ -12,7 +12,6 @@ let DAY_TIMESTAMP = BigInt.fromI32(24 * 60 * 60)
 export function handleRentalStarted(event: RentalStarted): void {
   let contractAddress = event.params._contractAddress.toHexString()
   let tokenId = event.params._tokenId
-
   let rentalIndex = getRentalsNextCount(contractAddress, tokenId)
   let newRentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
 
