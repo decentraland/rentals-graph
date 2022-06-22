@@ -2,19 +2,18 @@
 /* eslint-disable prefer-const */
 import { log } from '@graphprotocol/graph-ts'
 import { BigInt } from '@graphprotocol/graph-ts'
-import { buildCountForAllRentals, buildCountForRentals } from '../modules/count'
+import { getAllRentalsNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
+import { buildRentalId } from '../modules/rentals'
 import { Rental } from '../entities/schema'
 import { OperatorUpdated, RentalStarted, AssetClaimed } from '../entities/Rentals/Rentals'
 
-function buildRentalId(contractAddress: string, tokenId: BigInt, index: BigInt): string {
-  return contractAddress + ':' + tokenId.toString() + ':' + index.toString()
-}
+let DAY_TIMESTAMP = BigInt.fromI32(24 * 60 * 60)
 
-export function handleRentalStart(event: RentalStarted): void {
+export function handleRentalStarted(event: RentalStarted): void {
   let contractAddress = event.params._contractAddress.toHexString()
   let tokenId = event.params._tokenId
 
-  let rentalIndex = buildCountForRentals(contractAddress, tokenId)
+  let rentalIndex = getRentalsNextCount(contractAddress, tokenId)
   let newRentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
 
   let rental = new Rental(newRentalId)
@@ -28,19 +27,18 @@ export function handleRentalStart(event: RentalStarted): void {
   rental.sender = event.params._sender.toHexString()
   rental.ownerHasClaimedAsset = false
   rental.startedAt = event.block.timestamp
+  rental.endsAt = event.block.timestamp.plus(event.params._rentalDays.times(DAY_TIMESTAMP))
   rental.save()
   rentalIndex.save()
 
-  let metric = buildCountForAllRentals()
+  let metric = getAllRentalsNextCount()
   metric.save()
 }
 
 export function handleOperatorUpdated(event: OperatorUpdated): void {
   let contractAddress = event.params._contractAddress.toHexString()
   let tokenId = event.params._tokenId
-  let rentalIndex = buildCountForRentals(contractAddress, tokenId)
-  // Get the current one
-  rentalIndex.value.minus(BigInt.fromI32(1))
+  let rentalIndex = getRentalsCount(contractAddress, tokenId)
   let rentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
   let rental = Rental.load(rentalId)
 
@@ -53,12 +51,10 @@ export function handleOperatorUpdated(event: OperatorUpdated): void {
   rental.save()
 }
 
-export function handleClaimedAsset(event: AssetClaimed): void {
+export function handleAssetClaimed(event: AssetClaimed): void {
   let contractAddress = event.params._contractAddress.toHexString()
   let tokenId = event.params._tokenId
-  let rentalIndex = buildCountForRentals(contractAddress, tokenId)
-  // Get the current one
-  rentalIndex.value.minus(BigInt.fromI32(1))
+  let rentalIndex = getRentalsCount(contractAddress, tokenId)
   let rentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
   let rental = Rental.load(rentalId)
 

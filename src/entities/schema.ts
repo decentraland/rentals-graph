@@ -105,6 +105,15 @@ export class Rental extends Entity {
     this.set("startedAt", Value.fromBigInt(value));
   }
 
+  get endsAt(): BigInt {
+    let value = this.get("endsAt");
+    return value!.toBigInt();
+  }
+
+  set endsAt(value: BigInt) {
+    this.set("endsAt", Value.fromBigInt(value));
+  }
+
   get pricePerDay(): BigInt {
     let value = this.get("pricePerDay");
     return value!.toBigInt();

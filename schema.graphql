@@ -7,6 +7,7 @@ type Rental @entity {
   operator: String!
   rentalDays: BigInt!
   startedAt: BigInt!
+  endsAt: BigInt!
   pricePerDay: BigInt!
   sender: String!
   ownerHasClaimedAsset: Boolean!
