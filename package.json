@@ -1,0 +1,31 @@
+{
+  "name": "rentals-graph",
+  "version": "0.1.0",
+  "scripts": {
+    "codegen": "graph codegen --debug --output-dir src/entities/",
+    "check:lint": "eslint . --max-warnings=0",
+    "check:prettier": "prettier -c 'src/**/*.{js,ts,json,yml,md,tsx,html,css}'",
+    "fix:lint": "npm run check:code -- --fix",
+    "fix:prettier": "prettier --write ./src",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "deploy:mainnet": "npm run prepare:mainnet && npx graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/  decentraland/rentals-ethereum-mainnet",
+    "deploy:goerli": "npm run prepare:goerli && npx graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/  decentraland/rentals-ethereum-goerli"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.30.4",
+    "@graphprotocol/graph-ts": "^0.27.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "mustache": "^4.0.1",
+    "prettier": "^2.7.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.9.10"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0"
+  }
+}

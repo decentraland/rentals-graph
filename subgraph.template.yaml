@@ -1,0 +1,33 @@
+specVersion: 0.0.2
+description: Decentraland rentals
+repository: https://github.com/decentraland/rentals-graph
+schema:
+  file: ./schema.graphql
+dataSources:
+  # ---------------------------------------------------------
+  # Rentals -------------------------------------------------
+  # ---------------------------------------------------------
+  - kind: ethereum/contract
+    name: Rentals
+    network: {{network}}
+    source:
+      abi: Rentals
+      startBlock: {{start_block}}
+      address: '{{address}}'
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Rentals
+      abis:
+        - name: Rentals
+          file: ./abis/Rentals.json
+      eventHandlers:
+        - event: RentalStarted(address,uint256,address,address,address,uint256,uint256,address)
+          handler: handleRentalStarted
+        - event: OperatorUpdated(address,uint256,address,address)
+          handler: handleOperatorUpdated
+        - event: AssetClaimed(address,uint256,address)
+          handler: handleAssetClaimed
+      file: ./src/handlers/rentals.ts
