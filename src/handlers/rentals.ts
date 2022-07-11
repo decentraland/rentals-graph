@@ -24,6 +24,8 @@ export function handleRentalStarted(event: RentalStarted): void {
   rental.ownerHasClaimedAsset = false
   rental.startedAt = event.block.timestamp
   rental.endsAt = event.block.timestamp.plus(event.params._rentalDays.times(DAY_TIMESTAMP))
+  rental.signature = event.params._signature.toHexString()
+  rental.isExtension = event.params._isExtension
   rental.save()
   rentalIndex.save()
 

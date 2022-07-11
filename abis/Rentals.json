@@ -264,9 +264,21 @@
       },
       {
         "indexed": false,
+        "internalType": "bool",
+        "name": "_isExtension",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "_sender",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "_signature",
+        "type": "bytes"
       }
     ],
     "name": "RentalStarted",

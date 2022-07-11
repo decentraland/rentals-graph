@@ -271,8 +271,16 @@ export class RentalStarted__Params {
     return this._event.parameters[6].value.toBigInt();
   }
 
+  get _isExtension(): boolean {
+    return this._event.parameters[7].value.toBoolean();
+  }
+
   get _sender(): Address {
-    return this._event.parameters[7].value.toAddress();
+    return this._event.parameters[8].value.toAddress();
+  }
+
+  get _signature(): Bytes {
+    return this._event.parameters[9].value.toBytes();
   }
 }
 
