@@ -4,9 +4,9 @@ import { log } from '@graphprotocol/graph-ts'
 import { getAllRentalsNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
 import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
 import { Rental } from '../entities/schema'
-import { OperatorUpdated, RentalStarted, AssetClaimed } from '../entities/Rentals/Rentals'
+import { OperatorUpdated, AssetRented, AssetClaimed } from '../entities/Rentals/Rentals'
 
-export function handleRentalStarted(event: RentalStarted): void {
+export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
   let tokenId = event.params._tokenId
   let rentalIndex = getRentalsNextCount(contractAddress, tokenId)

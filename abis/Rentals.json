@@ -281,7 +281,7 @@
         "type": "bytes"
       }
     ],
-    "name": "RentalStarted",
+    "name": "AssetRented",
     "type": "event"
   },
   {

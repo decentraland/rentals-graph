@@ -1,7 +1,7 @@
 # Decentraland Rentals graph
 
 - Mainnet: https://thegraph.com/hosted-service/subgraph/decentraland/rentals-ethereum-mainnet (not-deployed-yet)
-- Goerli: https://thegraph.com/hosted-service/subgraph/decentraland/rentals-ethereum-goerli (QmcGCvtc6KthTtXqqvuvM3zv2dxNLMrtTR31mbuicBSnwC)
+- Goerli: https://thegraph.com/hosted-service/subgraph/decentraland/rentals-ethereum-goerli (QmShZDySTjnaaWPWUy4idSenpgpH8UA5ETdKeknYiJot1r)
 
 ### Install
 

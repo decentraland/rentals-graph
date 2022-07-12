@@ -230,16 +230,16 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class RentalStarted extends ethereum.Event {
-  get params(): RentalStarted__Params {
-    return new RentalStarted__Params(this);
+export class AssetRented extends ethereum.Event {
+  get params(): AssetRented__Params {
+    return new AssetRented__Params(this);
   }
 }
 
-export class RentalStarted__Params {
-  _event: RentalStarted;
+export class AssetRented__Params {
+  _event: AssetRented;
 
-  constructor(event: RentalStarted) {
+  constructor(event: AssetRented) {
     this._event = event;
   }
 
