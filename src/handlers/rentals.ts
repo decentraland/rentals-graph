@@ -23,6 +23,7 @@ export function handleRentalStarted(event: RentalStarted): void {
   rental.sender = event.params._sender.toHexString()
   rental.ownerHasClaimedAsset = false
   rental.startedAt = event.block.timestamp
+  rental.updatedAt = event.block.timestamp
   rental.endsAt = event.block.timestamp.plus(event.params._rentalDays.times(DAY_TIMESTAMP))
   rental.signature = event.params._signature.toHexString()
   rental.isExtension = event.params._isExtension
@@ -46,6 +47,7 @@ export function handleOperatorUpdated(event: OperatorUpdated): void {
   }
 
   rental.operator = event.params._to.toHexString()
+  rental.updatedAt = event.block.timestamp
   rental.save()
 }
 
@@ -62,5 +64,6 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   }
 
   rental.ownerHasClaimedAsset = true
+  rental.updatedAt = event.block.timestamp
   rental.save()
 }
