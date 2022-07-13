@@ -4,9 +4,9 @@ import { log } from '@graphprotocol/graph-ts'
 import { getAllRentalsNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
 import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
 import { Rental } from '../entities/schema'
-import { OperatorUpdated, RentalStarted, AssetClaimed } from '../entities/Rentals/Rentals'
+import { OperatorUpdated, AssetRented, AssetClaimed } from '../entities/Rentals/Rentals'
 
-export function handleRentalStarted(event: RentalStarted): void {
+export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
   let tokenId = event.params._tokenId
   let rentalIndex = getRentalsNextCount(contractAddress, tokenId)
@@ -23,7 +23,10 @@ export function handleRentalStarted(event: RentalStarted): void {
   rental.sender = event.params._sender.toHexString()
   rental.ownerHasClaimedAsset = false
   rental.startedAt = event.block.timestamp
+  rental.updatedAt = event.block.timestamp
   rental.endsAt = event.block.timestamp.plus(event.params._rentalDays.times(DAY_TIMESTAMP))
+  rental.signature = event.params._signature.toHexString()
+  rental.isExtension = event.params._isExtension
   rental.save()
   rentalIndex.save()
 
@@ -44,6 +47,7 @@ export function handleOperatorUpdated(event: OperatorUpdated): void {
   }
 
   rental.operator = event.params._to.toHexString()
+  rental.updatedAt = event.block.timestamp
   rental.save()
 }
 
@@ -60,5 +64,6 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   }
 
   rental.ownerHasClaimedAsset = true
+  rental.updatedAt = event.block.timestamp
   rental.save()
 }

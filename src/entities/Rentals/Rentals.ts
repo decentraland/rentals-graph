@@ -230,16 +230,16 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class RentalStarted extends ethereum.Event {
-  get params(): RentalStarted__Params {
-    return new RentalStarted__Params(this);
+export class AssetRented extends ethereum.Event {
+  get params(): AssetRented__Params {
+    return new AssetRented__Params(this);
   }
 }
 
-export class RentalStarted__Params {
-  _event: RentalStarted;
+export class AssetRented__Params {
+  _event: AssetRented;
 
-  constructor(event: RentalStarted) {
+  constructor(event: AssetRented) {
     this._event = event;
   }
 
@@ -271,8 +271,16 @@ export class RentalStarted__Params {
     return this._event.parameters[6].value.toBigInt();
   }
 
+  get _isExtension(): boolean {
+    return this._event.parameters[7].value.toBoolean();
+  }
+
   get _sender(): Address {
-    return this._event.parameters[7].value.toAddress();
+    return this._event.parameters[8].value.toAddress();
+  }
+
+  get _signature(): Bytes {
+    return this._event.parameters[9].value.toBytes();
   }
 }
 

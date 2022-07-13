@@ -114,6 +114,15 @@ export class Rental extends Entity {
     this.set("endsAt", Value.fromBigInt(value));
   }
 
+  get updatedAt(): BigInt {
+    let value = this.get("updatedAt");
+    return value!.toBigInt();
+  }
+
+  set updatedAt(value: BigInt) {
+    this.set("updatedAt", Value.fromBigInt(value));
+  }
+
   get pricePerDay(): BigInt {
     let value = this.get("pricePerDay");
     return value!.toBigInt();
@@ -139,6 +148,24 @@ export class Rental extends Entity {
 
   set ownerHasClaimedAsset(value: boolean) {
     this.set("ownerHasClaimedAsset", Value.fromBoolean(value));
+  }
+
+  get isExtension(): boolean {
+    let value = this.get("isExtension");
+    return value!.toBoolean();
+  }
+
+  set isExtension(value: boolean) {
+    this.set("isExtension", Value.fromBoolean(value));
+  }
+
+  get signature(): string {
+    let value = this.get("signature");
+    return value!.toString();
+  }
+
+  set signature(value: string) {
+    this.set("signature", Value.fromString(value));
   }
 }
 

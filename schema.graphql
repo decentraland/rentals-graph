@@ -8,9 +8,12 @@ type Rental @entity {
   rentalDays: BigInt!
   startedAt: BigInt!
   endsAt: BigInt!
+  updatedAt: BigInt!
   pricePerDay: BigInt!
   sender: String!
   ownerHasClaimedAsset: Boolean!
+  isExtension: Boolean!
+  signature: String!
 }
 
 # thegraph doesn't support count operations, but we need them to paginate results
