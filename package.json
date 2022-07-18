@@ -13,7 +13,7 @@
     "deploy:goerli": "npm run prepare:goerli && npx graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/  decentraland/rentals-ethereum-goerli"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.30.4",
+    "@graphprotocol/graph-cli": "^0.32.0",
     "@graphprotocol/graph-ts": "^0.27.0",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.28.0",

@@ -167,6 +167,15 @@ export class Rental extends Entity {
   set signature(value: string) {
     this.set("signature", Value.fromString(value));
   }
+
+  get rentalContractAddress(): string {
+    let value = this.get("rentalContractAddress");
+    return value!.toString();
+  }
+
+  set rentalContractAddress(value: string) {
+    this.set("rentalContractAddress", Value.fromString(value));
+  }
 }
 
 export class Count extends Entity {
