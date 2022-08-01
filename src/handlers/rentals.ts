@@ -1,10 +1,23 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prefer-const */
 import { log } from '@graphprotocol/graph-ts'
-import { getAllRentalsNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
+import { getAllRentalsNextCount, getNoncesUpdatesHistoryNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
 import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
-import { Rental } from '../entities/schema'
-import { OperatorUpdated, AssetRented, AssetClaimed } from '../entities/Rentals/Rentals'
+import {
+  NoncesUpdateAssetHistory,
+  NoncesUpdateContractHistory,
+  NoncesUpdateHistory,
+  NoncesUpdateSingerHistory,
+  Rental,
+} from '../entities/schema'
+import {
+  OperatorUpdated,
+  AssetRented,
+  AssetClaimed,
+  AssetNonceUpdated,
+  SignerNonceUpdated,
+  ContractNonceUpdated,
+} from '../entities/Rentals/Rentals'
 
 export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
@@ -66,4 +79,58 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   rental.ownerHasClaimedAsset = true
   rental.updatedAt = event.block.timestamp
   rental.save()
+}
+
+export function handleContractNonceUpdated(event: ContractNonceUpdated): void {
+  let count = getNoncesUpdatesHistoryNextCount()
+  let updateHistory = new NoncesUpdateHistory(count.value.toString())
+  updateHistory.sender = event.params._sender.toHexString()
+  updateHistory.date = event.block.timestamp
+  updateHistory.singerUpdate = null
+  updateHistory.assetUpdate = null
+  updateHistory.type = 'CONTRACT'
+  let updateContractNonceHistory = new NoncesUpdateContractHistory(updateHistory.id)
+  updateContractNonceHistory.fromNonce = event.params._from
+  updateContractNonceHistory.toNonce = event.params._to
+  updateHistory.contractUpdate = updateContractNonceHistory.id
+  updateContractNonceHistory.save()
+  updateHistory.save()
+  count.save()
+}
+
+export function handleSignerNonceUpdated(event: SignerNonceUpdated): void {
+  let count = getNoncesUpdatesHistoryNextCount()
+  let updateHistory = new NoncesUpdateHistory(count.value.toString())
+  updateHistory.type = 'SIGNER'
+  updateHistory.contractUpdate = null
+  updateHistory.assetUpdate = null
+  updateHistory.sender = event.params._sender.toHexString()
+  let signerUpdateHistory = new NoncesUpdateSingerHistory(updateHistory.id)
+  signerUpdateHistory.signer = event.params._signer.toHexString()
+  signerUpdateHistory.fromNonce = event.params._from
+  signerUpdateHistory.toNonce = event.params._to
+  updateHistory.singerUpdate = signerUpdateHistory.id
+  signerUpdateHistory.save()
+  updateHistory.save()
+  count.save()
+}
+
+export function handleAssetNonceUpdated(event: AssetNonceUpdated): void {
+  let count = getNoncesUpdatesHistoryNextCount()
+  let updateHistory = new NoncesUpdateHistory(count.value.toString())
+  updateHistory.id = count.value.toString()
+  updateHistory.type = 'ASSET'
+  updateHistory.sender = event.params._sender.toHexString()
+  let assetUpdateHistory = new NoncesUpdateAssetHistory(updateHistory.id)
+  assetUpdateHistory.fromNonce = event.params._from
+  assetUpdateHistory.toNonce = event.params._to
+  assetUpdateHistory.signer = event.params._signer.toHexString()
+  assetUpdateHistory.tokenId = event.params._tokenId
+  assetUpdateHistory.contractAddress = event.params._contractAddress.toHexString()
+  updateHistory.singerUpdate = null
+  updateHistory.contractUpdate = null
+  updateHistory.assetUpdate = assetUpdateHistory.id
+  assetUpdateHistory.save()
+  updateHistory.save()
+  count.save()
 }
