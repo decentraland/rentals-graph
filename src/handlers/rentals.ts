@@ -24,6 +24,12 @@ export function handleAssetRented(event: AssetRented): void {
   let tokenId = event.params._tokenId
   let rentalIndex = getRentalsNextCount(contractAddress, tokenId)
   let newRentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
+  let rentalContractAddress = event.transaction.to
+
+  if (!rentalContractAddress) {
+    log.error('An asset was rented without a rental contract address', [])
+    return
+  }
 
   let rental = new Rental(newRentalId)
   rental.contractAddress = contractAddress
@@ -40,6 +46,7 @@ export function handleAssetRented(event: AssetRented): void {
   rental.endsAt = event.block.timestamp.plus(event.params._rentalDays.times(DAY_TIMESTAMP))
   rental.signature = event.params._signature.toHexString()
   rental.isExtension = event.params._isExtension
+  rental.rentalContractAddress = rentalContractAddress.toHexString()
   rental.save()
   rentalIndex.save()
 

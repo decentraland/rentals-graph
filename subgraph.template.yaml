@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.5
 description: Decentraland rentals
 repository: https://github.com/decentraland/rentals-graph
 schema:
@@ -16,7 +16,7 @@ dataSources:
       address: '{{address}}'
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.6
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Rentals

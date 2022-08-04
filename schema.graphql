@@ -14,6 +14,7 @@ type Rental @entity {
   ownerHasClaimedAsset: Boolean!
   isExtension: Boolean!
   signature: String!
+  rentalContractAddress: String!
 }
 
 # thegraph doesn't support count operations, but we need them to paginate results
