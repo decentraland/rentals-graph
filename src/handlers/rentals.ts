@@ -9,8 +9,12 @@ import { OperatorUpdated, AssetRented, AssetClaimed } from '../entities/Rentals/
 export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
   let tokenId = event.params._tokenId
+
+  let currentRentalIndex = getRentalsCount(contractAddress, tokenId)
   let rentalIndex = getRentalsNextCount(contractAddress, tokenId)
+  let currentRentalId = buildRentalId(contractAddress, tokenId, currentRentalIndex.value)
   let newRentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
+
   let rentalContractAddress = event.transaction.to
 
   if (!rentalContractAddress) {
@@ -27,13 +31,21 @@ export function handleAssetRented(event: AssetRented): void {
   rental.rentalDays = event.params._rentalDays
   rental.pricePerDay = event.params._pricePerDay
   rental.sender = event.params._sender.toHexString()
-  rental.ownerHasClaimedAsset = false
   rental.startedAt = event.block.timestamp
   rental.updatedAt = event.block.timestamp
   rental.endsAt = event.block.timestamp.plus(event.params._rentalDays.times(DAY_TIMESTAMP))
   rental.signature = event.params._signature.toHexString()
   rental.isExtension = event.params._isExtension
   rental.rentalContractAddress = rentalContractAddress.toHexString()
+  rental.ownerHasClaimedAsset = false
+  rental.isActive = true
+
+  let currentRental = Rental.load(currentRentalId)
+  if (currentRental) {
+    currentRental.isActive = false
+    currentRental.save()
+  }
+
   rental.save()
   rentalIndex.save()
 
@@ -70,6 +82,7 @@ export function handleAssetClaimed(event: AssetClaimed): void {
     return
   }
 
+  rental.isActive = false
   rental.ownerHasClaimedAsset = true
   rental.updatedAt = event.block.timestamp
   rental.save()
