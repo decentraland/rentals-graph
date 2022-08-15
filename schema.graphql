@@ -13,6 +13,7 @@ type Rental @entity {
   sender: String!
   ownerHasClaimedAsset: Boolean!
   isExtension: Boolean!
+  isActive: Boolean!
   signature: String!
   rentalContractAddress: String!
 }
