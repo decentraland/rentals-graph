@@ -11,9 +11,9 @@ export function handleAssetRented(event: AssetRented): void {
   let tokenId = event.params._tokenId
 
   let currentRentalIndex = getRentalsCount(contractAddress, tokenId)
-  let rentalIndex = getRentalsNextCount(contractAddress, tokenId)
+  let newRentalIndex = getRentalsNextCount(contractAddress, tokenId)
   let currentRentalId = buildRentalId(contractAddress, tokenId, currentRentalIndex.value)
-  let newRentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
+  let newRentalId = buildRentalId(contractAddress, tokenId, newRentalIndex.value)
 
   let rentalContractAddress = event.transaction.to
 
@@ -47,7 +47,7 @@ export function handleAssetRented(event: AssetRented): void {
   }
 
   rental.save()
-  rentalIndex.save()
+  newRentalIndex.save()
 
   let metric = getAllRentalsNextCount()
   metric.save()
