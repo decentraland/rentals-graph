@@ -159,6 +159,15 @@ export class Rental extends Entity {
     this.set("isExtension", Value.fromBoolean(value));
   }
 
+  get isActive(): boolean {
+    let value = this.get("isActive");
+    return value!.toBoolean();
+  }
+
+  set isActive(value: boolean) {
+    this.set("isActive", Value.fromBoolean(value));
+  }
+
   get signature(): string {
     let value = this.get("signature");
     return value!.toString();
