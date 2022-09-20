@@ -7,7 +7,7 @@ import {
   NoncesUpdateAssetHistory,
   NoncesUpdateContractHistory,
   NoncesUpdateHistory,
-  NoncesUpdateSingerHistory,
+  NoncesUpdateSignerHistory,
   Rental,
 } from '../entities/schema'
 import {
@@ -126,7 +126,7 @@ export function handleSignerNonceUpdated(event: SignerNonceUpdated): void {
   updateHistory.assetUpdate = null
   updateHistory.date = event.block.timestamp
   updateHistory.sender = event.params._sender.toHexString()
-  let signerUpdateHistory = new NoncesUpdateSingerHistory(updateHistory.id)
+  let signerUpdateHistory = new NoncesUpdateSignerHistory(updateHistory.id)
   signerUpdateHistory.signer = event.params._signer.toHexString()
   signerUpdateHistory.fromNonce = event.params._from
   signerUpdateHistory.toNonce = event.params._to

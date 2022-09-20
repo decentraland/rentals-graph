@@ -395,7 +395,7 @@ export class NoncesUpdateContractHistory extends Entity {
   }
 }
 
-export class NoncesUpdateSingerHistory extends Entity {
+export class NoncesUpdateSignerHistory extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -405,20 +405,20 @@ export class NoncesUpdateSingerHistory extends Entity {
     let id = this.get("id");
     assert(
       id != null,
-      "Cannot save NoncesUpdateSingerHistory entity without an ID"
+      "Cannot save NoncesUpdateSignerHistory entity without an ID"
     );
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type NoncesUpdateSingerHistory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type NoncesUpdateSignerHistory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("NoncesUpdateSingerHistory", id.toString(), this);
+      store.set("NoncesUpdateSignerHistory", id.toString(), this);
     }
   }
 
-  static load(id: string): NoncesUpdateSingerHistory | null {
-    return changetype<NoncesUpdateSingerHistory | null>(
-      store.get("NoncesUpdateSingerHistory", id)
+  static load(id: string): NoncesUpdateSignerHistory | null {
+    return changetype<NoncesUpdateSignerHistory | null>(
+      store.get("NoncesUpdateSignerHistory", id)
     );
   }
 

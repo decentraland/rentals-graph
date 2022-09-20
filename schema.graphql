@@ -37,27 +37,24 @@ type NoncesUpdateHistory @entity {
   date: BigInt!
   sender: String!
   contractUpdate: NoncesUpdateContractHistory
-  singerUpdate: NoncesUpdateSingerHistory
+  singerUpdate: NoncesUpdateSignerHistory
   assetUpdate: NoncesUpdateAssetHistory
 }
 
 type NoncesUpdateContractHistory @entity {
   id: ID!
-  fromNonce: BigInt!
-  toNonce: BigInt!
+  newNonce: BigInt!
 }
 
-type NoncesUpdateSingerHistory @entity {
+type NoncesUpdateSignerHistory @entity {
   id: ID!
-  fromNonce: BigInt!
-  toNonce: BigInt!
+  newNonce: BigInt!
   signer: String!
 }
 
 type NoncesUpdateAssetHistory @entity {
   id: ID!
-  fromNonce: BigInt!
-  toNonce: BigInt!
+  newNonce: BigInt!
   signer: String!
   tokenId: BigInt!
   contractAddress: String!
