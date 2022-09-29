@@ -110,8 +110,7 @@ export function handleContractNonceUpdated(event: ContractNonceUpdated): void {
   updateHistory.assetUpdate = null
   updateHistory.type = 'CONTRACT'
   let updateContractNonceHistory = new NoncesUpdateContractHistory(updateHistory.id)
-  updateContractNonceHistory.fromNonce = event.params._from
-  updateContractNonceHistory.toNonce = event.params._to
+  updateContractNonceHistory.newNonce = event.params._to
   updateHistory.contractUpdate = updateContractNonceHistory.id
   updateContractNonceHistory.save()
   updateHistory.save()
@@ -128,8 +127,7 @@ export function handleSignerNonceUpdated(event: SignerNonceUpdated): void {
   updateHistory.sender = event.params._sender.toHexString()
   let signerUpdateHistory = new NoncesUpdateSignerHistory(updateHistory.id)
   signerUpdateHistory.signer = event.params._signer.toHexString()
-  signerUpdateHistory.fromNonce = event.params._from
-  signerUpdateHistory.toNonce = event.params._to
+  signerUpdateHistory.newNonce = event.params._to
   updateHistory.singerUpdate = signerUpdateHistory.id
   signerUpdateHistory.save()
   updateHistory.save()
@@ -146,8 +144,7 @@ export function handleAssetNonceUpdated(event: AssetNonceUpdated): void {
   updateHistory.singerUpdate = null
   updateHistory.contractUpdate = null
   let assetUpdateHistory = new NoncesUpdateAssetHistory(updateHistory.id)
-  assetUpdateHistory.fromNonce = event.params._from
-  assetUpdateHistory.toNonce = event.params._to
+  assetUpdateHistory.newNonce = event.params._to
   assetUpdateHistory.signer = event.params._signer.toHexString()
   assetUpdateHistory.tokenId = event.params._tokenId
   assetUpdateHistory.contractAddress = event.params._contractAddress.toHexString()

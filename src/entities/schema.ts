@@ -376,22 +376,22 @@ export class NoncesUpdateContractHistory extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get fromNonce(): BigInt {
-    let value = this.get("fromNonce");
+  get newNonce(): BigInt {
+    let value = this.get("newNonce");
     return value!.toBigInt();
   }
 
-  set fromNonce(value: BigInt) {
-    this.set("fromNonce", Value.fromBigInt(value));
+  set newNonce(value: BigInt) {
+    this.set("newNonce", Value.fromBigInt(value));
   }
 
-  get toNonce(): BigInt {
-    let value = this.get("toNonce");
-    return value!.toBigInt();
+  get signer(): string {
+    let value = this.get("signer");
+    return value!.toString();
   }
 
-  set toNonce(value: BigInt) {
-    this.set("toNonce", Value.fromBigInt(value));
+  set signer(value: string) {
+    this.set("signer", Value.fromString(value));
   }
 }
 
@@ -431,22 +431,13 @@ export class NoncesUpdateSignerHistory extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get fromNonce(): BigInt {
-    let value = this.get("fromNonce");
+  get newNonce(): BigInt {
+    let value = this.get("newNonce");
     return value!.toBigInt();
   }
 
-  set fromNonce(value: BigInt) {
-    this.set("fromNonce", Value.fromBigInt(value));
-  }
-
-  get toNonce(): BigInt {
-    let value = this.get("toNonce");
-    return value!.toBigInt();
-  }
-
-  set toNonce(value: BigInt) {
-    this.set("toNonce", Value.fromBigInt(value));
+  set newNonce(value: BigInt) {
+    this.set("newNonce", Value.fromBigInt(value));
   }
 
   get signer(): string {
@@ -495,22 +486,13 @@ export class NoncesUpdateAssetHistory extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get fromNonce(): BigInt {
-    let value = this.get("fromNonce");
+  get newNonce(): BigInt {
+    let value = this.get("newNonce");
     return value!.toBigInt();
   }
 
-  set fromNonce(value: BigInt) {
-    this.set("fromNonce", Value.fromBigInt(value));
-  }
-
-  get toNonce(): BigInt {
-    let value = this.get("toNonce");
-    return value!.toBigInt();
-  }
-
-  set toNonce(value: BigInt) {
-    this.set("toNonce", Value.fromBigInt(value));
+  set newNonce(value: BigInt) {
+    this.set("newNonce", Value.fromBigInt(value));
   }
 
   get signer(): string {
