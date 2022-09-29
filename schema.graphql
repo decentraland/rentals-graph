@@ -24,3 +24,38 @@ type Count @entity {
   id: ID!
   value: BigInt!
 }
+
+enum NonceUpdateType @entity {
+  CONTRACT
+  SIGNER
+  ASSET
+}
+
+type NoncesUpdateHistory @entity {
+  id: ID!
+  type: NonceUpdateType!
+  date: BigInt!
+  sender: String!
+  contractUpdate: NoncesUpdateContractHistory
+  singerUpdate: NoncesUpdateSignerHistory
+  assetUpdate: NoncesUpdateAssetHistory
+}
+
+type NoncesUpdateContractHistory @entity {
+  id: ID!
+  newNonce: BigInt!
+}
+
+type NoncesUpdateSignerHistory @entity {
+  id: ID!
+  newNonce: BigInt!
+  signer: String!
+}
+
+type NoncesUpdateAssetHistory @entity {
+  id: ID!
+  newNonce: BigInt!
+  signer: String!
+  tokenId: BigInt!
+  contractAddress: String!
+}

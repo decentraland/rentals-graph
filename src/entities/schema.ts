@@ -227,3 +227,316 @@ export class Count extends Entity {
     this.set("value", Value.fromBigInt(value));
   }
 }
+
+export class NoncesUpdateHistory extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save NoncesUpdateHistory entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type NoncesUpdateHistory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("NoncesUpdateHistory", id.toString(), this);
+    }
+  }
+
+  static load(id: string): NoncesUpdateHistory | null {
+    return changetype<NoncesUpdateHistory | null>(
+      store.get("NoncesUpdateHistory", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get type(): string {
+    let value = this.get("type");
+    return value!.toString();
+  }
+
+  set type(value: string) {
+    this.set("type", Value.fromString(value));
+  }
+
+  get date(): BigInt {
+    let value = this.get("date");
+    return value!.toBigInt();
+  }
+
+  set date(value: BigInt) {
+    this.set("date", Value.fromBigInt(value));
+  }
+
+  get sender(): string {
+    let value = this.get("sender");
+    return value!.toString();
+  }
+
+  set sender(value: string) {
+    this.set("sender", Value.fromString(value));
+  }
+
+  get contractUpdate(): string | null {
+    let value = this.get("contractUpdate");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set contractUpdate(value: string | null) {
+    if (!value) {
+      this.unset("contractUpdate");
+    } else {
+      this.set("contractUpdate", Value.fromString(<string>value));
+    }
+  }
+
+  get singerUpdate(): string | null {
+    let value = this.get("singerUpdate");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set singerUpdate(value: string | null) {
+    if (!value) {
+      this.unset("singerUpdate");
+    } else {
+      this.set("singerUpdate", Value.fromString(<string>value));
+    }
+  }
+
+  get assetUpdate(): string | null {
+    let value = this.get("assetUpdate");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set assetUpdate(value: string | null) {
+    if (!value) {
+      this.unset("assetUpdate");
+    } else {
+      this.set("assetUpdate", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class NoncesUpdateContractHistory extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save NoncesUpdateContractHistory entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type NoncesUpdateContractHistory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("NoncesUpdateContractHistory", id.toString(), this);
+    }
+  }
+
+  static load(id: string): NoncesUpdateContractHistory | null {
+    return changetype<NoncesUpdateContractHistory | null>(
+      store.get("NoncesUpdateContractHistory", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get fromNonce(): BigInt {
+    let value = this.get("fromNonce");
+    return value!.toBigInt();
+  }
+
+  set fromNonce(value: BigInt) {
+    this.set("fromNonce", Value.fromBigInt(value));
+  }
+
+  get toNonce(): BigInt {
+    let value = this.get("toNonce");
+    return value!.toBigInt();
+  }
+
+  set toNonce(value: BigInt) {
+    this.set("toNonce", Value.fromBigInt(value));
+  }
+}
+
+export class NoncesUpdateSignerHistory extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save NoncesUpdateSignerHistory entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type NoncesUpdateSignerHistory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("NoncesUpdateSignerHistory", id.toString(), this);
+    }
+  }
+
+  static load(id: string): NoncesUpdateSignerHistory | null {
+    return changetype<NoncesUpdateSignerHistory | null>(
+      store.get("NoncesUpdateSignerHistory", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get fromNonce(): BigInt {
+    let value = this.get("fromNonce");
+    return value!.toBigInt();
+  }
+
+  set fromNonce(value: BigInt) {
+    this.set("fromNonce", Value.fromBigInt(value));
+  }
+
+  get toNonce(): BigInt {
+    let value = this.get("toNonce");
+    return value!.toBigInt();
+  }
+
+  set toNonce(value: BigInt) {
+    this.set("toNonce", Value.fromBigInt(value));
+  }
+
+  get signer(): string {
+    let value = this.get("signer");
+    return value!.toString();
+  }
+
+  set signer(value: string) {
+    this.set("signer", Value.fromString(value));
+  }
+}
+
+export class NoncesUpdateAssetHistory extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save NoncesUpdateAssetHistory entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type NoncesUpdateAssetHistory must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("NoncesUpdateAssetHistory", id.toString(), this);
+    }
+  }
+
+  static load(id: string): NoncesUpdateAssetHistory | null {
+    return changetype<NoncesUpdateAssetHistory | null>(
+      store.get("NoncesUpdateAssetHistory", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get fromNonce(): BigInt {
+    let value = this.get("fromNonce");
+    return value!.toBigInt();
+  }
+
+  set fromNonce(value: BigInt) {
+    this.set("fromNonce", Value.fromBigInt(value));
+  }
+
+  get toNonce(): BigInt {
+    let value = this.get("toNonce");
+    return value!.toBigInt();
+  }
+
+  set toNonce(value: BigInt) {
+    this.set("toNonce", Value.fromBigInt(value));
+  }
+
+  get signer(): string {
+    let value = this.get("signer");
+    return value!.toString();
+  }
+
+  set signer(value: string) {
+    this.set("signer", Value.fromString(value));
+  }
+
+  get tokenId(): BigInt {
+    let value = this.get("tokenId");
+    return value!.toBigInt();
+  }
+
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
+  }
+
+  get contractAddress(): string {
+    let value = this.get("contractAddress");
+    return value!.toString();
+  }
+
+  set contractAddress(value: string) {
+    this.set("contractAddress", Value.fromString(value));
+  }
+}

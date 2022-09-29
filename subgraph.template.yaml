@@ -30,4 +30,10 @@ dataSources:
           handler: handleOperatorUpdated
         - event: AssetClaimed(address,uint256,address)
           handler: handleAssetClaimed
+        - event: ContractNonceUpdated(uint256,uint256,address)
+          handler: handleContractNonceUpdated
+        - event: SignerNonceUpdated(uint256,uint256,address,address)
+          handler: handleSignerNonceUpdated
+        - event: AssetNonceUpdated(uint256,uint256,address,uint256,address,address)
+          handler: handleAssetNonceUpdated
       file: ./src/handlers/rentals.ts
