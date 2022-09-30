@@ -385,13 +385,13 @@ export class NoncesUpdateContractHistory extends Entity {
     this.set("newNonce", Value.fromBigInt(value));
   }
 
-  get signer(): string {
-    let value = this.get("signer");
-    return value!.toString();
+  get contractAddress(): Bytes {
+    let value = this.get("contractAddress");
+    return value!.toBytes();
   }
 
-  set signer(value: string) {
-    this.set("signer", Value.fromString(value));
+  set contractAddress(value: Bytes) {
+    this.set("contractAddress", Value.fromBytes(value));
   }
 }
 
