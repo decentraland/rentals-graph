@@ -44,7 +44,7 @@ type NoncesUpdateHistory @entity {
 type NoncesUpdateContractHistory @entity {
   id: ID!
   newNonce: BigInt!
-  signer: String!
+  contractAddress: Bytes!
 }
 
 type NoncesUpdateSignerHistory @entity {

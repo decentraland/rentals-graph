@@ -111,6 +111,7 @@ export function handleContractNonceUpdated(event: ContractNonceUpdated): void {
   updateHistory.type = 'CONTRACT'
   let updateContractNonceHistory = new NoncesUpdateContractHistory(updateHistory.id)
   updateContractNonceHistory.newNonce = event.params._to
+  updateContractNonceHistory.contractAddress = event.address
   updateHistory.contractUpdate = updateContractNonceHistory.id
   updateContractNonceHistory.save()
   updateHistory.save()
