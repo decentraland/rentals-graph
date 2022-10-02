@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prefer-const */
-import { log } from '@graphprotocol/graph-ts'
+import { Address, log } from '@graphprotocol/graph-ts'
 import { getAllRentalsNextCount, getIndexesUpdatesHistoryNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
 import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
 import {
@@ -9,8 +9,10 @@ import {
   IndexesUpdateHistory,
   IndexesUpdateSignerHistory,
   Rental,
+  Rentable,
 } from '../entities/schema'
 import { AssetRented, AssetClaimed, ContractIndexUpdated, SignerIndexUpdated, AssetIndexUpdated } from '../entities/Rentals/Rentals'
+import { Rentable as RentableTemplate } from '../entities/templates'
 
 export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
@@ -57,6 +59,14 @@ export function handleAssetRented(event: AssetRented): void {
 
   let metric = getAllRentalsNextCount()
   metric.save()
+
+  let rentable = Rentable.load(contractAddress)
+  
+  if (rentable == null) {
+    RentableTemplate.create(Address.fromHexString(contractAddress))
+    rentable = new Rentable(contractAddress)
+    rentable.save()
+  }
 }
 
 export function handleAssetClaimed(event: AssetClaimed): void {

@@ -522,3 +522,35 @@ export class IndexesUpdateAssetHistory extends Entity {
     this.set("contractAddress", Value.fromString(value));
   }
 }
+
+export class Rentable extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Rentable entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Rentable must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Rentable", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Rentable | null {
+    return changetype<Rentable | null>(store.get("Rentable", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+}
