@@ -24,16 +24,14 @@ dataSources:
         - name: Rentals
           file: ./abis/Rentals.json
       eventHandlers:
-        - event: AssetRented(address,uint256,address,address,address,uint256,uint256,bool,address,bytes)
+        - event: AssetRented(indexed address,indexed uint256,address,address,address,uint256,uint256,bool,address,bytes)
           handler: handleAssetRented
-        - event: OperatorUpdated(address,uint256,address,address)
-          handler: handleOperatorUpdated
-        - event: AssetClaimed(address,uint256,address)
+        - event: AssetClaimed(indexed address,indexed uint256,address)
           handler: handleAssetClaimed
-        - event: ContractNonceUpdated(uint256,uint256,address)
-          handler: handleContractNonceUpdated
-        - event: SignerNonceUpdated(uint256,uint256,address,address)
-          handler: handleSignerNonceUpdated
-        - event: AssetNonceUpdated(uint256,uint256,address,uint256,address,address)
-          handler: handleAssetNonceUpdated
+        - event: ContractIndexUpdated(uint256,address)
+          handler: handleContractIndexUpdated
+        - event: SignerIndexUpdated(indexed address,uint256,address)
+          handler: handleSignerIndexUpdated
+        - event: AssetIndexUpdated(indexed address,indexed address,indexed uint256,uint256,address)
+          handler: handleAssetIndexUpdated
       file: ./src/handlers/rentals.ts
