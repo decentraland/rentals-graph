@@ -63,7 +63,7 @@ export function handleAssetRented(event: AssetRented): void {
   let rentable = Rentable.load(contractAddress)
   
   if (rentable == null) {
-    RentableTemplate.create(Address.fromHexString(contractAddress))
+    RentableTemplate.create(Address.fromString(contractAddress))
     rentable = new Rentable(contractAddress)
     rentable.save()
   }
