@@ -16,6 +16,10 @@ export function handleUpdateOperator(event: UpdateOperator): void {
     return
   }
 
+  if (!rental.isActive) {
+    log.info("Rental is not active, skipping updating the operator", [])
+  }
+
   rental.operator = event.params._operator.toHexString()
   rental.updatedAt = event.block.timestamp
   rental.save()
