@@ -25,38 +25,46 @@ type Count @entity {
   value: BigInt!
 }
 
-enum NonceUpdateType @entity {
+enum IndexUpdateType @entity {
   CONTRACT
   SIGNER
   ASSET
 }
 
-type NoncesUpdateHistory @entity {
+type IndexesUpdateHistory @entity {
   id: ID!
-  type: NonceUpdateType!
+  type: IndexUpdateType!
   date: BigInt!
   sender: String!
-  contractUpdate: NoncesUpdateContractHistory
-  singerUpdate: NoncesUpdateSignerHistory
-  assetUpdate: NoncesUpdateAssetHistory
+  contractUpdate: IndexesUpdateContractHistory
+  singerUpdate: IndexesUpdateSignerHistory
+  assetUpdate: IndexesUpdateAssetHistory
 }
 
-type NoncesUpdateContractHistory @entity {
+type IndexesUpdateContractHistory @entity {
   id: ID!
-  newNonce: BigInt!
+  newIndex: BigInt!
   contractAddress: Bytes!
 }
 
-type NoncesUpdateSignerHistory @entity {
+type IndexesUpdateSignerHistory @entity {
   id: ID!
-  newNonce: BigInt!
+  newIndex: BigInt!
   signer: String!
 }
 
-type NoncesUpdateAssetHistory @entity {
+type IndexesUpdateAssetHistory @entity {
   id: ID!
-  newNonce: BigInt!
+  newIndex: BigInt!
   signer: String!
   tokenId: BigInt!
   contractAddress: String!
+}
+
+# This entity is used to track nft contracts being used for rentals.
+# This is used so no Rentable.create(contractAddress) is called more than once for the same contract.
+# The UpdateOperator event is emitted by these contracts (At least LAND and Estates).
+# So we need to handle these events from these contract for indexing purposes.
+type Rentable @entity {
+  id: ID!
 }

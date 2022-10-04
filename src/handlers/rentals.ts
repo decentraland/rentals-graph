@@ -1,23 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prefer-const */
-import { log } from '@graphprotocol/graph-ts'
-import { getAllRentalsNextCount, getNoncesUpdatesHistoryNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
+import { Address, log } from '@graphprotocol/graph-ts'
+import { getAllRentalsNextCount, getIndexesUpdatesHistoryNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
 import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
 import {
-  NoncesUpdateAssetHistory,
-  NoncesUpdateContractHistory,
-  NoncesUpdateHistory,
-  NoncesUpdateSignerHistory,
+  IndexesUpdateAssetHistory,
+  IndexesUpdateContractHistory,
+  IndexesUpdateHistory,
+  IndexesUpdateSignerHistory,
   Rental,
+  Rentable,
 } from '../entities/schema'
-import {
-  OperatorUpdated,
-  AssetRented,
-  AssetClaimed,
-  AssetNonceUpdated,
-  SignerNonceUpdated,
-  ContractNonceUpdated,
-} from '../entities/Rentals/Rentals'
+import { AssetRented, AssetClaimed, ContractIndexUpdated, SignerIndexUpdated, AssetIndexUpdated } from '../entities/Rentals/Rentals'
+import { Rentable as RentableTemplate } from '../entities/templates'
 
 export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
@@ -64,23 +59,14 @@ export function handleAssetRented(event: AssetRented): void {
 
   let metric = getAllRentalsNextCount()
   metric.save()
-}
 
-export function handleOperatorUpdated(event: OperatorUpdated): void {
-  let contractAddress = event.params._contractAddress.toHexString()
-  let tokenId = event.params._tokenId
-  let rentalIndex = getRentalsCount(contractAddress, tokenId)
-  let rentalId = buildRentalId(contractAddress, tokenId, rentalIndex.value)
-  let rental = Rental.load(rentalId)
-
-  if (rental == null) {
-    log.error('An operator was updated for a rental that doesn\'t exist "{}"', [contractAddress, tokenId.toString()])
-    return
+  let rentable = Rentable.load(contractAddress)
+  
+  if (rentable == null) {
+    RentableTemplate.create(Address.fromString(contractAddress))
+    rentable = new Rentable(contractAddress)
+    rentable.save()
   }
-
-  rental.operator = event.params._to.toHexString()
-  rental.updatedAt = event.block.timestamp
-  rental.save()
 }
 
 export function handleAssetClaimed(event: AssetClaimed): void {
@@ -101,51 +87,51 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   rental.save()
 }
 
-export function handleContractNonceUpdated(event: ContractNonceUpdated): void {
-  let count = getNoncesUpdatesHistoryNextCount()
-  let updateHistory = new NoncesUpdateHistory(count.value.toString())
+export function handleContractIndexUpdated(event: ContractIndexUpdated): void {
+  let count = getIndexesUpdatesHistoryNextCount()
+  let updateHistory = new IndexesUpdateHistory(count.value.toString())
   updateHistory.sender = event.params._sender.toHexString()
   updateHistory.date = event.block.timestamp
   updateHistory.singerUpdate = null
   updateHistory.assetUpdate = null
   updateHistory.type = 'CONTRACT'
-  let updateContractNonceHistory = new NoncesUpdateContractHistory(updateHistory.id)
-  updateContractNonceHistory.newNonce = event.params._to
-  updateContractNonceHistory.contractAddress = event.address
-  updateHistory.contractUpdate = updateContractNonceHistory.id
-  updateContractNonceHistory.save()
+  let updateContractIndexHistory = new IndexesUpdateContractHistory(updateHistory.id)
+  updateContractIndexHistory.newIndex = event.params._newIndex
+  updateContractIndexHistory.contractAddress = event.address
+  updateHistory.contractUpdate = updateContractIndexHistory.id
+  updateContractIndexHistory.save()
   updateHistory.save()
   count.save()
 }
 
-export function handleSignerNonceUpdated(event: SignerNonceUpdated): void {
-  let count = getNoncesUpdatesHistoryNextCount()
-  let updateHistory = new NoncesUpdateHistory(count.value.toString())
+export function handleSignerIndexUpdated(event: SignerIndexUpdated): void {
+  let count = getIndexesUpdatesHistoryNextCount()
+  let updateHistory = new IndexesUpdateHistory(count.value.toString())
   updateHistory.type = 'SIGNER'
   updateHistory.contractUpdate = null
   updateHistory.assetUpdate = null
   updateHistory.date = event.block.timestamp
   updateHistory.sender = event.params._sender.toHexString()
-  let signerUpdateHistory = new NoncesUpdateSignerHistory(updateHistory.id)
+  let signerUpdateHistory = new IndexesUpdateSignerHistory(updateHistory.id)
   signerUpdateHistory.signer = event.params._signer.toHexString()
-  signerUpdateHistory.newNonce = event.params._to
+  signerUpdateHistory.newIndex = event.params._newIndex
   updateHistory.singerUpdate = signerUpdateHistory.id
   signerUpdateHistory.save()
   updateHistory.save()
   count.save()
 }
 
-export function handleAssetNonceUpdated(event: AssetNonceUpdated): void {
-  let count = getNoncesUpdatesHistoryNextCount()
-  let updateHistory = new NoncesUpdateHistory(count.value.toString())
+export function handleAssetIndexUpdated(event: AssetIndexUpdated): void {
+  let count = getIndexesUpdatesHistoryNextCount()
+  let updateHistory = new IndexesUpdateHistory(count.value.toString())
   updateHistory.id = count.value.toString()
   updateHistory.type = 'ASSET'
   updateHistory.sender = event.params._sender.toHexString()
   updateHistory.date = event.block.timestamp
   updateHistory.singerUpdate = null
   updateHistory.contractUpdate = null
-  let assetUpdateHistory = new NoncesUpdateAssetHistory(updateHistory.id)
-  assetUpdateHistory.newNonce = event.params._to
+  let assetUpdateHistory = new IndexesUpdateAssetHistory(updateHistory.id)
+  assetUpdateHistory.newIndex = event.params._newIndex
   assetUpdateHistory.signer = event.params._signer.toHexString()
   assetUpdateHistory.tokenId = event.params._tokenId
   assetUpdateHistory.contractAddress = event.params._contractAddress.toHexString()

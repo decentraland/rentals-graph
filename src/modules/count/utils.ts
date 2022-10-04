@@ -38,46 +38,46 @@ export function getRentalsNextCount(contractAddress: string, tokenId: BigInt): C
   return count
 }
 
-export function getNoncesUpdatesHistoryCount(): Count {
-  let count = buildCount('all-nonces-updates')
+export function getIndexesUpdatesHistoryCount(): Count {
+  let count = buildCount('all-indexes-updates')
   return count
 }
 
-export function getNoncesUpdatesHistoryNextCount(): Count {
-  let count = getNoncesUpdatesHistoryCount()
+export function getIndexesUpdatesHistoryNextCount(): Count {
+  let count = getIndexesUpdatesHistoryCount()
   count.value = count.value.plus(BigInt.fromI32(1))
   return count
 }
 
-export function getContractNoncesUpdatesHistoryCount(rentalContractAddress: string): Count {
-  let count = buildCount('contract-nonces-updates-' + rentalContractAddress)
+export function getContractIndexesUpdatesHistoryCount(rentalContractAddress: string): Count {
+  let count = buildCount('contract-indexes-updates-' + rentalContractAddress)
   return count
 }
 
-export function getContractNoncesUpdatesHistoryNextCount(rentalContractAddress: string): Count {
-  let count = getContractNoncesUpdatesHistoryCount(rentalContractAddress)
+export function getContractIndexesUpdatesHistoryNextCount(rentalContractAddress: string): Count {
+  let count = getContractIndexesUpdatesHistoryCount(rentalContractAddress)
   count.value = count.value.plus(BigInt.fromI32(1))
   return count
 }
 
-export function getSignerNoncesUpdatesHistoryCount(rentalContractAddress: string, signerAddress: string): Count {
-  let count = buildCount('signer-nonces-updates-' + rentalContractAddress + '-' + signerAddress)
+export function getSignerIndexesUpdatesHistoryCount(rentalContractAddress: string, signerAddress: string): Count {
+  let count = buildCount('signer-indexes-updates-' + rentalContractAddress + '-' + signerAddress)
   return count
 }
 
-export function getSignerNoncesUpdatesHistoryNextCount(rentalContractAddress: string, signerAddress: string): Count {
-  let count = getSignerNoncesUpdatesHistoryCount(rentalContractAddress, signerAddress)
+export function getSignerIndexesUpdatesHistoryNextCount(rentalContractAddress: string, signerAddress: string): Count {
+  let count = getSignerIndexesUpdatesHistoryCount(rentalContractAddress, signerAddress)
   count.value = count.value.plus(BigInt.fromI32(1))
   return count
 }
 
-export function getAssetNoncesUpdatesHistoryCount(rentalContractAddress: string, contractAddress: string, tokenId: string): Count {
-  let count = buildCount('asset-nonces-updates-' + rentalContractAddress + '-' + contractAddress + '-' + tokenId)
+export function getAssetIndexesUpdatesHistoryCount(rentalContractAddress: string, contractAddress: string, tokenId: string): Count {
+  let count = buildCount('asset-indexes-updates-' + rentalContractAddress + '-' + contractAddress + '-' + tokenId)
   return count
 }
 
-export function getAssetNoncesUpdatesHistoryNextCount(): Count {
-  let count = getNoncesUpdatesHistoryCount()
+export function getAssetIndexesUpdatesHistoryNextCount(): Count {
+  let count = getIndexesUpdatesHistoryCount()
   count.value = count.value.plus(BigInt.fromI32(1))
   return count
 }

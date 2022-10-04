@@ -1,0 +1,11 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "name": "_tokenId", "type": "uint256" },
+      { "indexed": true, "name": "_operator", "type": "address" }
+    ],
+    "name": "UpdateOperator",
+    "type": "event"
+  }
+]

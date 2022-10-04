@@ -36,197 +36,37 @@ export class AssetClaimed__Params {
   }
 }
 
-export class AssetNonceUpdated extends ethereum.Event {
-  get params(): AssetNonceUpdated__Params {
-    return new AssetNonceUpdated__Params(this);
+export class AssetIndexUpdated extends ethereum.Event {
+  get params(): AssetIndexUpdated__Params {
+    return new AssetIndexUpdated__Params(this);
   }
 }
 
-export class AssetNonceUpdated__Params {
-  _event: AssetNonceUpdated;
+export class AssetIndexUpdated__Params {
+  _event: AssetIndexUpdated;
 
-  constructor(event: AssetNonceUpdated) {
+  constructor(event: AssetIndexUpdated) {
     this._event = event;
-  }
-
-  get _from(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get _to(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get _contractAddress(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get _tokenId(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
   }
 
   get _signer(): Address {
-    return this._event.parameters[4].value.toAddress();
-  }
-
-  get _sender(): Address {
-    return this._event.parameters[5].value.toAddress();
-  }
-}
-
-export class ContractNonceUpdated extends ethereum.Event {
-  get params(): ContractNonceUpdated__Params {
-    return new ContractNonceUpdated__Params(this);
-  }
-}
-
-export class ContractNonceUpdated__Params {
-  _event: ContractNonceUpdated;
-
-  constructor(event: ContractNonceUpdated) {
-    this._event = event;
-  }
-
-  get _from(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get _to(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get _sender(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-}
-
-export class FeeCollectorUpdated extends ethereum.Event {
-  get params(): FeeCollectorUpdated__Params {
-    return new FeeCollectorUpdated__Params(this);
-  }
-}
-
-export class FeeCollectorUpdated__Params {
-  _event: FeeCollectorUpdated;
-
-  constructor(event: FeeCollectorUpdated) {
-    this._event = event;
-  }
-
-  get _from(): Address {
     return this._event.parameters[0].value.toAddress();
-  }
-
-  get _to(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get _sender(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-}
-
-export class FeeUpdated extends ethereum.Event {
-  get params(): FeeUpdated__Params {
-    return new FeeUpdated__Params(this);
-  }
-}
-
-export class FeeUpdated__Params {
-  _event: FeeUpdated;
-
-  constructor(event: FeeUpdated) {
-    this._event = event;
-  }
-
-  get _from(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get _to(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get _sender(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-}
-
-export class MetaTransactionExecuted extends ethereum.Event {
-  get params(): MetaTransactionExecuted__Params {
-    return new MetaTransactionExecuted__Params(this);
-  }
-}
-
-export class MetaTransactionExecuted__Params {
-  _event: MetaTransactionExecuted;
-
-  constructor(event: MetaTransactionExecuted) {
-    this._event = event;
-  }
-
-  get _userAddress(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _relayerAddress(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-
-  get _functionData(): Bytes {
-    return this._event.parameters[2].value.toBytes();
-  }
-}
-
-export class OperatorUpdated extends ethereum.Event {
-  get params(): OperatorUpdated__Params {
-    return new OperatorUpdated__Params(this);
-  }
-}
-
-export class OperatorUpdated__Params {
-  _event: OperatorUpdated;
-
-  constructor(event: OperatorUpdated) {
-    this._event = event;
   }
 
   get _contractAddress(): Address {
-    return this._event.parameters[0].value.toAddress();
+    return this._event.parameters[1].value.toAddress();
   }
 
   get _tokenId(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+    return this._event.parameters[2].value.toBigInt();
   }
 
-  get _to(): Address {
-    return this._event.parameters[2].value.toAddress();
+  get _newIndex(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 
   get _sender(): Address {
-    return this._event.parameters[3].value.toAddress();
-  }
-}
-
-export class OwnershipTransferred extends ethereum.Event {
-  get params(): OwnershipTransferred__Params {
-    return new OwnershipTransferred__Params(this);
-  }
-}
-
-export class OwnershipTransferred__Params {
-  _event: OwnershipTransferred;
-
-  constructor(event: OwnershipTransferred) {
-    this._event = event;
-  }
-
-  get previousOwner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get newOwner(): Address {
-    return this._event.parameters[1].value.toAddress();
+    return this._event.parameters[4].value.toAddress();
   }
 }
 
@@ -284,46 +124,38 @@ export class AssetRented__Params {
   }
 }
 
-export class SignerNonceUpdated extends ethereum.Event {
-  get params(): SignerNonceUpdated__Params {
-    return new SignerNonceUpdated__Params(this);
+export class ContractIndexUpdated extends ethereum.Event {
+  get params(): ContractIndexUpdated__Params {
+    return new ContractIndexUpdated__Params(this);
   }
 }
 
-export class SignerNonceUpdated__Params {
-  _event: SignerNonceUpdated;
+export class ContractIndexUpdated__Params {
+  _event: ContractIndexUpdated;
 
-  constructor(event: SignerNonceUpdated) {
+  constructor(event: ContractIndexUpdated) {
     this._event = event;
   }
 
-  get _from(): BigInt {
+  get _newIndex(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get _to(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get _signer(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
   get _sender(): Address {
-    return this._event.parameters[3].value.toAddress();
+    return this._event.parameters[1].value.toAddress();
   }
 }
 
-export class TokenUpdated extends ethereum.Event {
-  get params(): TokenUpdated__Params {
-    return new TokenUpdated__Params(this);
+export class FeeCollectorUpdated extends ethereum.Event {
+  get params(): FeeCollectorUpdated__Params {
+    return new FeeCollectorUpdated__Params(this);
   }
 }
 
-export class TokenUpdated__Params {
-  _event: TokenUpdated;
+export class FeeCollectorUpdated__Params {
+  _event: FeeCollectorUpdated;
 
-  constructor(event: TokenUpdated) {
+  constructor(event: FeeCollectorUpdated) {
     this._event = event;
   }
 
@@ -340,37 +172,209 @@ export class TokenUpdated__Params {
   }
 }
 
+export class FeeUpdated extends ethereum.Event {
+  get params(): FeeUpdated__Params {
+    return new FeeUpdated__Params(this);
+  }
+}
+
+export class FeeUpdated__Params {
+  _event: FeeUpdated;
+
+  constructor(event: FeeUpdated) {
+    this._event = event;
+  }
+
+  get _from(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get _to(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _sender(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+}
+
+export class Initialized extends ethereum.Event {
+  get params(): Initialized__Params {
+    return new Initialized__Params(this);
+  }
+}
+
+export class Initialized__Params {
+  _event: Initialized;
+
+  constructor(event: Initialized) {
+    this._event = event;
+  }
+
+  get version(): i32 {
+    return this._event.parameters[0].value.toI32();
+  }
+}
+
+export class MetaTransactionExecuted extends ethereum.Event {
+  get params(): MetaTransactionExecuted__Params {
+    return new MetaTransactionExecuted__Params(this);
+  }
+}
+
+export class MetaTransactionExecuted__Params {
+  _event: MetaTransactionExecuted;
+
+  constructor(event: MetaTransactionExecuted) {
+    this._event = event;
+  }
+
+  get _userAddress(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _relayerAddress(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get _functionData(): Bytes {
+    return this._event.parameters[2].value.toBytes();
+  }
+}
+
+export class OwnershipTransferred extends ethereum.Event {
+  get params(): OwnershipTransferred__Params {
+    return new OwnershipTransferred__Params(this);
+  }
+}
+
+export class OwnershipTransferred__Params {
+  _event: OwnershipTransferred;
+
+  constructor(event: OwnershipTransferred) {
+    this._event = event;
+  }
+
+  get previousOwner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get newOwner(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class Paused extends ethereum.Event {
+  get params(): Paused__Params {
+    return new Paused__Params(this);
+  }
+}
+
+export class Paused__Params {
+  _event: Paused;
+
+  constructor(event: Paused) {
+    this._event = event;
+  }
+
+  get account(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class SignerIndexUpdated extends ethereum.Event {
+  get params(): SignerIndexUpdated__Params {
+    return new SignerIndexUpdated__Params(this);
+  }
+}
+
+export class SignerIndexUpdated__Params {
+  _event: SignerIndexUpdated;
+
+  constructor(event: SignerIndexUpdated) {
+    this._event = event;
+  }
+
+  get _signer(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _newIndex(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _sender(): Address {
+    return this._event.parameters[2].value.toAddress();
+  }
+}
+
+export class Unpaused extends ethereum.Event {
+  get params(): Unpaused__Params {
+    return new Unpaused__Params(this);
+  }
+}
+
+export class Unpaused__Params {
+  _event: Unpaused;
+
+  constructor(event: Unpaused) {
+    this._event = event;
+  }
+
+  get account(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class Rentals__getRentalResultValue0Struct extends ethereum.Tuple {
+  get lessor(): Address {
+    return this[0].toAddress();
+  }
+
+  get tenant(): Address {
+    return this[1].toAddress();
+  }
+
+  get endDate(): BigInt {
+    return this[2].toBigInt();
+  }
+}
+
 export class Rentals extends ethereum.SmartContract {
   static bind(address: Address): Rentals {
     return new Rentals("Rentals", address);
   }
 
-  assetNonce(param0: Address, param1: BigInt, param2: Address): BigInt {
+  getAssetIndex(
+    _contractAddress: Address,
+    _tokenId: BigInt,
+    _signer: Address
+  ): BigInt {
     let result = super.call(
-      "assetNonce",
-      "assetNonce(address,uint256,address):(uint256)",
+      "getAssetIndex",
+      "getAssetIndex(address,uint256,address):(uint256)",
       [
-        ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1),
-        ethereum.Value.fromAddress(param2)
+        ethereum.Value.fromAddress(_contractAddress),
+        ethereum.Value.fromUnsignedBigInt(_tokenId),
+        ethereum.Value.fromAddress(_signer)
       ]
     );
 
     return result[0].toBigInt();
   }
 
-  try_assetNonce(
-    param0: Address,
-    param1: BigInt,
-    param2: Address
+  try_getAssetIndex(
+    _contractAddress: Address,
+    _tokenId: BigInt,
+    _signer: Address
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "assetNonce",
-      "assetNonce(address,uint256,address):(uint256)",
+      "getAssetIndex",
+      "getAssetIndex(address,uint256,address):(uint256)",
       [
-        ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1),
-        ethereum.Value.fromAddress(param2)
+        ethereum.Value.fromAddress(_contractAddress),
+        ethereum.Value.fromUnsignedBigInt(_tokenId),
+        ethereum.Value.fromAddress(_signer)
       ]
     );
     if (result.reverted) {
@@ -380,16 +384,20 @@ export class Rentals extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  contractNonce(): BigInt {
-    let result = super.call("contractNonce", "contractNonce():(uint256)", []);
+  getContractIndex(): BigInt {
+    let result = super.call(
+      "getContractIndex",
+      "getContractIndex():(uint256)",
+      []
+    );
 
     return result[0].toBigInt();
   }
 
-  try_contractNonce(): ethereum.CallResult<BigInt> {
+  try_getContractIndex(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "contractNonce",
-      "contractNonce():(uint256)",
+      "getContractIndex",
+      "getContractIndex():(uint256)",
       []
     );
     if (result.reverted) {
@@ -399,14 +407,14 @@ export class Rentals extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  fee(): BigInt {
-    let result = super.call("fee", "fee():(uint256)", []);
+  getFee(): BigInt {
+    let result = super.call("getFee", "getFee():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_fee(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("fee", "fee():(uint256)", []);
+  try_getFee(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("getFee", "getFee():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -414,62 +422,21 @@ export class Rentals extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  feeCollector(): Address {
-    let result = super.call("feeCollector", "feeCollector():(address)", []);
+  getFeeCollector(): Address {
+    let result = super.call(
+      "getFeeCollector",
+      "getFeeCollector():(address)",
+      []
+    );
 
     return result[0].toAddress();
   }
 
-  try_feeCollector(): ethereum.CallResult<Address> {
-    let result = super.tryCall("feeCollector", "feeCollector():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  isRented(_contractAddress: Address, _tokenId: BigInt): boolean {
-    let result = super.call("isRented", "isRented(address,uint256):(bool)", [
-      ethereum.Value.fromAddress(_contractAddress),
-      ethereum.Value.fromUnsignedBigInt(_tokenId)
-    ]);
-
-    return result[0].toBoolean();
-  }
-
-  try_isRented(
-    _contractAddress: Address,
-    _tokenId: BigInt
-  ): ethereum.CallResult<boolean> {
-    let result = super.tryCall("isRented", "isRented(address,uint256):(bool)", [
-      ethereum.Value.fromAddress(_contractAddress),
-      ethereum.Value.fromUnsignedBigInt(_tokenId)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
-  lessors(param0: Address, param1: BigInt): Address {
-    let result = super.call("lessors", "lessors(address,uint256):(address)", [
-      ethereum.Value.fromAddress(param0),
-      ethereum.Value.fromUnsignedBigInt(param1)
-    ]);
-
-    return result[0].toAddress();
-  }
-
-  try_lessors(param0: Address, param1: BigInt): ethereum.CallResult<Address> {
+  try_getFeeCollector(): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "lessors",
-      "lessors(address,uint256):(address)",
-      [
-        ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+      "getFeeCollector",
+      "getFeeCollector():(address)",
+      []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -478,17 +445,49 @@ export class Rentals extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  nonces(param0: Address): BigInt {
-    let result = super.call("nonces", "nonces(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+  getIsRented(_contractAddress: Address, _tokenId: BigInt): boolean {
+    let result = super.call(
+      "getIsRented",
+      "getIsRented(address,uint256):(bool)",
+      [
+        ethereum.Value.fromAddress(_contractAddress),
+        ethereum.Value.fromUnsignedBigInt(_tokenId)
+      ]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_getIsRented(
+    _contractAddress: Address,
+    _tokenId: BigInt
+  ): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "getIsRented",
+      "getIsRented(address,uint256):(bool)",
+      [
+        ethereum.Value.fromAddress(_contractAddress),
+        ethereum.Value.fromUnsignedBigInt(_tokenId)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  getNonce(_signer: Address): BigInt {
+    let result = super.call("getNonce", "getNonce(address):(uint256)", [
+      ethereum.Value.fromAddress(_signer)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_nonces(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("nonces", "nonces(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
+  try_getNonce(_signer: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("getNonce", "getNonce(address):(uint256)", [
+      ethereum.Value.fromAddress(_signer)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -497,11 +496,88 @@ export class Rentals extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  getRental(
+    _contractAddress: Address,
+    _tokenId: BigInt
+  ): Rentals__getRentalResultValue0Struct {
+    let result = super.call(
+      "getRental",
+      "getRental(address,uint256):((address,address,uint256))",
+      [
+        ethereum.Value.fromAddress(_contractAddress),
+        ethereum.Value.fromUnsignedBigInt(_tokenId)
+      ]
+    );
+
+    return changetype<Rentals__getRentalResultValue0Struct>(
+      result[0].toTuple()
+    );
+  }
+
+  try_getRental(
+    _contractAddress: Address,
+    _tokenId: BigInt
+  ): ethereum.CallResult<Rentals__getRentalResultValue0Struct> {
+    let result = super.tryCall(
+      "getRental",
+      "getRental(address,uint256):((address,address,uint256))",
+      [
+        ethereum.Value.fromAddress(_contractAddress),
+        ethereum.Value.fromUnsignedBigInt(_tokenId)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      changetype<Rentals__getRentalResultValue0Struct>(value[0].toTuple())
+    );
+  }
+
+  getSignerIndex(_signer: Address): BigInt {
+    let result = super.call(
+      "getSignerIndex",
+      "getSignerIndex(address):(uint256)",
+      [ethereum.Value.fromAddress(_signer)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getSignerIndex(_signer: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getSignerIndex",
+      "getSignerIndex(address):(uint256)",
+      [ethereum.Value.fromAddress(_signer)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getToken(): Address {
+    let result = super.call("getToken", "getToken():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_getToken(): ethereum.CallResult<Address> {
+    let result = super.tryCall("getToken", "getToken():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   onERC721Received(
     _operator: Address,
     param1: Address,
-    param2: BigInt,
-    param3: Bytes
+    _tokenId: BigInt,
+    _data: Bytes
   ): Bytes {
     let result = super.call(
       "onERC721Received",
@@ -509,8 +585,8 @@ export class Rentals extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(_operator),
         ethereum.Value.fromAddress(param1),
-        ethereum.Value.fromUnsignedBigInt(param2),
-        ethereum.Value.fromBytes(param3)
+        ethereum.Value.fromUnsignedBigInt(_tokenId),
+        ethereum.Value.fromBytes(_data)
       ]
     );
 
@@ -520,8 +596,8 @@ export class Rentals extends ethereum.SmartContract {
   try_onERC721Received(
     _operator: Address,
     param1: Address,
-    param2: BigInt,
-    param3: Bytes
+    _tokenId: BigInt,
+    _data: Bytes
   ): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
       "onERC721Received",
@@ -529,8 +605,8 @@ export class Rentals extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(_operator),
         ethereum.Value.fromAddress(param1),
-        ethereum.Value.fromUnsignedBigInt(param2),
-        ethereum.Value.fromBytes(param3)
+        ethereum.Value.fromUnsignedBigInt(_tokenId),
+        ethereum.Value.fromBytes(_data)
       ]
     );
     if (result.reverted) {
@@ -555,90 +631,45 @@ export class Rentals extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  rentals(param0: Address, param1: BigInt): BigInt {
-    let result = super.call("rentals", "rentals(address,uint256):(uint256)", [
-      ethereum.Value.fromAddress(param0),
-      ethereum.Value.fromUnsignedBigInt(param1)
-    ]);
+  paused(): boolean {
+    let result = super.call("paused", "paused():(bool)", []);
 
-    return result[0].toBigInt();
+    return result[0].toBoolean();
   }
 
-  try_rentals(param0: Address, param1: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "rentals",
-      "rentals(address,uint256):(uint256)",
-      [
-        ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
-    );
+  try_paused(): ethereum.CallResult<boolean> {
+    let result = super.tryCall("paused", "paused():(bool)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+}
+
+export class ConstructorCall extends ethereum.Call {
+  get inputs(): ConstructorCall__Inputs {
+    return new ConstructorCall__Inputs(this);
   }
 
-  signerNonce(param0: Address): BigInt {
-    let result = super.call("signerNonce", "signerNonce(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-
-    return result[0].toBigInt();
+  get outputs(): ConstructorCall__Outputs {
+    return new ConstructorCall__Outputs(this);
   }
+}
 
-  try_signerNonce(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "signerNonce",
-      "signerNonce(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+export class ConstructorCall__Inputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
   }
+}
 
-  tenants(param0: Address, param1: BigInt): Address {
-    let result = super.call("tenants", "tenants(address,uint256):(address)", [
-      ethereum.Value.fromAddress(param0),
-      ethereum.Value.fromUnsignedBigInt(param1)
-    ]);
+export class ConstructorCall__Outputs {
+  _call: ConstructorCall;
 
-    return result[0].toAddress();
-  }
-
-  try_tenants(param0: Address, param1: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "tenants",
-      "tenants(address,uint256):(address)",
-      [
-        ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  token(): Address {
-    let result = super.call("token", "token():(address)", []);
-
-    return result[0].toAddress();
-  }
-
-  try_token(): ethereum.CallResult<Address> {
-    let result = super.tryCall("token", "token():(address)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
+  constructor(call: ConstructorCall) {
+    this._call = call;
   }
 }
 
@@ -669,7 +700,7 @@ export class AcceptListingCall__Inputs {
     return this._call.inputValues[1].value.toAddress();
   }
 
-  get _index(): BigInt {
+  get _conditionIndex(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 
@@ -707,7 +738,7 @@ export class AcceptListingCall_listingStruct extends ethereum.Tuple {
     return this[3].toBigInt();
   }
 
-  get nonces(): Array<BigInt> {
+  get indexes(): Array<BigInt> {
     return this[4].toBigIntArray();
   }
 
@@ -723,8 +754,12 @@ export class AcceptListingCall_listingStruct extends ethereum.Tuple {
     return this[7].toBigIntArray();
   }
 
+  get target(): Address {
+    return this[8].toAddress();
+  }
+
   get signature(): Bytes {
-    return this[8].toBytes();
+    return this[9].toBytes();
   }
 }
 
@@ -777,7 +812,7 @@ export class AcceptOfferCall_offerStruct extends ethereum.Tuple {
     return this[3].toBigInt();
   }
 
-  get nonces(): Array<BigInt> {
+  get indexes(): Array<BigInt> {
     return this[4].toBigIntArray();
   }
 
@@ -802,20 +837,20 @@ export class AcceptOfferCall_offerStruct extends ethereum.Tuple {
   }
 }
 
-export class BumpAssetNonceCall extends ethereum.Call {
-  get inputs(): BumpAssetNonceCall__Inputs {
-    return new BumpAssetNonceCall__Inputs(this);
+export class BumpAssetIndexCall extends ethereum.Call {
+  get inputs(): BumpAssetIndexCall__Inputs {
+    return new BumpAssetIndexCall__Inputs(this);
   }
 
-  get outputs(): BumpAssetNonceCall__Outputs {
-    return new BumpAssetNonceCall__Outputs(this);
+  get outputs(): BumpAssetIndexCall__Outputs {
+    return new BumpAssetIndexCall__Outputs(this);
   }
 }
 
-export class BumpAssetNonceCall__Inputs {
-  _call: BumpAssetNonceCall;
+export class BumpAssetIndexCall__Inputs {
+  _call: BumpAssetIndexCall;
 
-  constructor(call: BumpAssetNonceCall) {
+  constructor(call: BumpAssetIndexCall) {
     this._call = call;
   }
 
@@ -828,62 +863,62 @@ export class BumpAssetNonceCall__Inputs {
   }
 }
 
-export class BumpAssetNonceCall__Outputs {
-  _call: BumpAssetNonceCall;
+export class BumpAssetIndexCall__Outputs {
+  _call: BumpAssetIndexCall;
 
-  constructor(call: BumpAssetNonceCall) {
+  constructor(call: BumpAssetIndexCall) {
     this._call = call;
   }
 }
 
-export class BumpContractNonceCall extends ethereum.Call {
-  get inputs(): BumpContractNonceCall__Inputs {
-    return new BumpContractNonceCall__Inputs(this);
+export class BumpContractIndexCall extends ethereum.Call {
+  get inputs(): BumpContractIndexCall__Inputs {
+    return new BumpContractIndexCall__Inputs(this);
   }
 
-  get outputs(): BumpContractNonceCall__Outputs {
-    return new BumpContractNonceCall__Outputs(this);
+  get outputs(): BumpContractIndexCall__Outputs {
+    return new BumpContractIndexCall__Outputs(this);
   }
 }
 
-export class BumpContractNonceCall__Inputs {
-  _call: BumpContractNonceCall;
+export class BumpContractIndexCall__Inputs {
+  _call: BumpContractIndexCall;
 
-  constructor(call: BumpContractNonceCall) {
+  constructor(call: BumpContractIndexCall) {
     this._call = call;
   }
 }
 
-export class BumpContractNonceCall__Outputs {
-  _call: BumpContractNonceCall;
+export class BumpContractIndexCall__Outputs {
+  _call: BumpContractIndexCall;
 
-  constructor(call: BumpContractNonceCall) {
+  constructor(call: BumpContractIndexCall) {
     this._call = call;
   }
 }
 
-export class BumpSignerNonceCall extends ethereum.Call {
-  get inputs(): BumpSignerNonceCall__Inputs {
-    return new BumpSignerNonceCall__Inputs(this);
+export class BumpSignerIndexCall extends ethereum.Call {
+  get inputs(): BumpSignerIndexCall__Inputs {
+    return new BumpSignerIndexCall__Inputs(this);
   }
 
-  get outputs(): BumpSignerNonceCall__Outputs {
-    return new BumpSignerNonceCall__Outputs(this);
+  get outputs(): BumpSignerIndexCall__Outputs {
+    return new BumpSignerIndexCall__Outputs(this);
   }
 }
 
-export class BumpSignerNonceCall__Inputs {
-  _call: BumpSignerNonceCall;
+export class BumpSignerIndexCall__Inputs {
+  _call: BumpSignerIndexCall;
 
-  constructor(call: BumpSignerNonceCall) {
+  constructor(call: BumpSignerIndexCall) {
     this._call = call;
   }
 }
 
-export class BumpSignerNonceCall__Outputs {
-  _call: BumpSignerNonceCall;
+export class BumpSignerIndexCall__Outputs {
+  _call: BumpSignerIndexCall;
 
-  constructor(call: BumpSignerNonceCall) {
+  constructor(call: BumpSignerIndexCall) {
     this._call = call;
   }
 }
@@ -905,12 +940,12 @@ export class ClaimCall__Inputs {
     this._call = call;
   }
 
-  get _contractAddress(): Address {
-    return this._call.inputValues[0].value.toAddress();
+  get _contractAddresses(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
   }
 
-  get _tokenId(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+  get _tokenIds(): Array<BigInt> {
+    return this._call.inputValues[1].value.toBigIntArray();
   }
 }
 
@@ -1006,6 +1041,78 @@ export class InitializeCall__Outputs {
   }
 }
 
+export class OnERC721ReceivedCall extends ethereum.Call {
+  get inputs(): OnERC721ReceivedCall__Inputs {
+    return new OnERC721ReceivedCall__Inputs(this);
+  }
+
+  get outputs(): OnERC721ReceivedCall__Outputs {
+    return new OnERC721ReceivedCall__Outputs(this);
+  }
+}
+
+export class OnERC721ReceivedCall__Inputs {
+  _call: OnERC721ReceivedCall;
+
+  constructor(call: OnERC721ReceivedCall) {
+    this._call = call;
+  }
+
+  get _operator(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value1(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get _tokenId(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get _data(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
+  }
+}
+
+export class OnERC721ReceivedCall__Outputs {
+  _call: OnERC721ReceivedCall;
+
+  constructor(call: OnERC721ReceivedCall) {
+    this._call = call;
+  }
+
+  get value0(): Bytes {
+    return this._call.outputValues[0].value.toBytes();
+  }
+}
+
+export class PauseCall extends ethereum.Call {
+  get inputs(): PauseCall__Inputs {
+    return new PauseCall__Inputs(this);
+  }
+
+  get outputs(): PauseCall__Outputs {
+    return new PauseCall__Outputs(this);
+  }
+}
+
+export class PauseCall__Inputs {
+  _call: PauseCall;
+
+  constructor(call: PauseCall) {
+    this._call = call;
+  }
+}
+
+export class PauseCall__Outputs {
+  _call: PauseCall;
+
+  constructor(call: PauseCall) {
+    this._call = call;
+  }
+}
+
 export class RenounceOwnershipCall extends ethereum.Call {
   get inputs(): RenounceOwnershipCall__Inputs {
     return new RenounceOwnershipCall__Inputs(this);
@@ -1092,70 +1199,40 @@ export class SetFeeCollectorCall__Outputs {
   }
 }
 
-export class SetOperatorCall extends ethereum.Call {
-  get inputs(): SetOperatorCall__Inputs {
-    return new SetOperatorCall__Inputs(this);
+export class SetUpdateOperatorCall extends ethereum.Call {
+  get inputs(): SetUpdateOperatorCall__Inputs {
+    return new SetUpdateOperatorCall__Inputs(this);
   }
 
-  get outputs(): SetOperatorCall__Outputs {
-    return new SetOperatorCall__Outputs(this);
+  get outputs(): SetUpdateOperatorCall__Outputs {
+    return new SetUpdateOperatorCall__Outputs(this);
   }
 }
 
-export class SetOperatorCall__Inputs {
-  _call: SetOperatorCall;
+export class SetUpdateOperatorCall__Inputs {
+  _call: SetUpdateOperatorCall;
 
-  constructor(call: SetOperatorCall) {
+  constructor(call: SetUpdateOperatorCall) {
     this._call = call;
   }
 
-  get _contractAddress(): Address {
-    return this._call.inputValues[0].value.toAddress();
+  get _contractAddresses(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
   }
 
-  get _tokenId(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+  get _tokenIds(): Array<BigInt> {
+    return this._call.inputValues[1].value.toBigIntArray();
   }
 
-  get _operator(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-}
-
-export class SetOperatorCall__Outputs {
-  _call: SetOperatorCall;
-
-  constructor(call: SetOperatorCall) {
-    this._call = call;
+  get _operators(): Array<Address> {
+    return this._call.inputValues[2].value.toAddressArray();
   }
 }
 
-export class SetTokenCall extends ethereum.Call {
-  get inputs(): SetTokenCall__Inputs {
-    return new SetTokenCall__Inputs(this);
-  }
+export class SetUpdateOperatorCall__Outputs {
+  _call: SetUpdateOperatorCall;
 
-  get outputs(): SetTokenCall__Outputs {
-    return new SetTokenCall__Outputs(this);
-  }
-}
-
-export class SetTokenCall__Inputs {
-  _call: SetTokenCall;
-
-  constructor(call: SetTokenCall) {
-    this._call = call;
-  }
-
-  get _token(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class SetTokenCall__Outputs {
-  _call: SetTokenCall;
-
-  constructor(call: SetTokenCall) {
+  constructor(call: SetUpdateOperatorCall) {
     this._call = call;
   }
 }
@@ -1186,6 +1263,32 @@ export class TransferOwnershipCall__Outputs {
   _call: TransferOwnershipCall;
 
   constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class UnpauseCall extends ethereum.Call {
+  get inputs(): UnpauseCall__Inputs {
+    return new UnpauseCall__Inputs(this);
+  }
+
+  get outputs(): UnpauseCall__Outputs {
+    return new UnpauseCall__Outputs(this);
+  }
+}
+
+export class UnpauseCall__Inputs {
+  _call: UnpauseCall;
+
+  constructor(call: UnpauseCall) {
+    this._call = call;
+  }
+}
+
+export class UnpauseCall__Outputs {
+  _call: UnpauseCall;
+
+  constructor(call: UnpauseCall) {
     this._call = call;
   }
 }
