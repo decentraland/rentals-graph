@@ -554,3 +554,79 @@ export class Rentable extends Entity {
     this.set("id", Value.fromString(value));
   }
 }
+
+export class RentalAsset extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save RentalAsset entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type RentalAsset must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("RentalAsset", id.toString(), this);
+    }
+  }
+
+  static load(id: string): RentalAsset | null {
+    return changetype<RentalAsset | null>(store.get("RentalAsset", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get contractAddress(): Bytes {
+    let value = this.get("contractAddress");
+    return value!.toBytes();
+  }
+
+  set contractAddress(value: Bytes) {
+    this.set("contractAddress", Value.fromBytes(value));
+  }
+
+  get tokenId(): BigInt {
+    let value = this.get("tokenId");
+    return value!.toBigInt();
+  }
+
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
+  }
+
+  get lessor(): Bytes | null {
+    let value = this.get("lessor");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set lessor(value: Bytes | null) {
+    if (!value) {
+      this.unset("lessor");
+    } else {
+      this.set("lessor", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get isClaimed(): boolean {
+    let value = this.get("isClaimed");
+    return value!.toBoolean();
+  }
+
+  set isClaimed(value: boolean) {
+    this.set("isClaimed", Value.fromBoolean(value));
+  }
+}

@@ -68,3 +68,14 @@ type IndexesUpdateAssetHistory @entity {
 type Rentable @entity {
   id: ID!
 }
+
+# Assets that have been transferred in and out of the rentals contract.
+type RentalAsset @entity {
+  id: ID!
+  contractAddress: Bytes!
+  tokenId: BigInt!
+  # The address acting as lessor of the asset, will be null if the asset was claimed back.
+  lessor: Bytes
+  # Determines if the asset has been transferred out of the rentals contract through a claim.
+  isClaimed: Boolean!
+}

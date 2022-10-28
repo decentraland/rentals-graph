@@ -10,6 +10,7 @@ import {
   IndexesUpdateSignerHistory,
   Rental,
   Rentable,
+  RentalAsset,
 } from '../entities/schema'
 import { AssetRented, AssetClaimed, ContractIndexUpdated, SignerIndexUpdated, AssetIndexUpdated } from '../entities/Rentals/Rentals'
 import { Rentable as RentableTemplate } from '../entities/templates'
@@ -61,12 +62,28 @@ export function handleAssetRented(event: AssetRented): void {
   metric.save()
 
   let rentable = Rentable.load(contractAddress)
-  
+
   if (rentable == null) {
     RentableTemplate.create(Address.fromString(contractAddress))
     rentable = new Rentable(contractAddress)
     rentable.save()
   }
+
+  // RentalAsset
+
+  let rentalAssetId = contractAddress + '-' + tokenId.toString()
+  let rentalAsset = RentalAsset.load(rentalAssetId)
+
+  if (rentalAsset == null) {
+    rentalAsset = new RentalAsset(rentalAssetId)
+  }
+
+  rentalAsset.contractAddress = Address.fromHexString(contractAddress)
+  rentalAsset.tokenId = tokenId
+  rentalAsset.lessor = Address.fromHexString(rental.lessor)
+  rentalAsset.isClaimed = false
+
+  rentalAsset.save()
 }
 
 export function handleAssetClaimed(event: AssetClaimed): void {
@@ -85,6 +102,18 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   rental.ownerHasClaimedAsset = true
   rental.updatedAt = event.block.timestamp
   rental.save()
+
+  let rentalAssetId = contractAddress + '-' + tokenId.toString()
+  let rentalAsset = RentalAsset.load(rentalAssetId)
+
+  if (rentalAsset == null) {
+    log.error('RentalAsset with id "{}" does not exist', [rentalAssetId])
+  } else {
+    rentalAsset.lessor = null
+    rentalAsset.isClaimed = true
+
+    rentalAsset.save()
+  }
 }
 
 export function handleContractIndexUpdated(event: ContractIndexUpdated): void {
