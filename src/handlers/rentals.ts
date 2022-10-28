@@ -107,7 +107,7 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   let rentalAsset = RentalAsset.load(rentalAssetId)
 
   if (rentalAsset == null) {
-    console.error('RentalAsset with id "{}" does not exist', [rentalAssetId])
+    log.error('RentalAsset with id "{}" does not exist', [rentalAssetId])
   } else {
     rentalAsset.lessor = null
     rentalAsset.isClaimed = true
