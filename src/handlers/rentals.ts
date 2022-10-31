@@ -56,11 +56,15 @@ export function handleAssetRented(event: AssetRented): void {
     currentRental.save()
   }
 
-  let assetNonceUpdateHistoryIdDueToRent = getIndexesUpdatesHistoryNextCount().value.minus(BigInt.fromI32(1))
-  let assetNonceUpdateHistory = IndexesUpdateAssetHistory.load(assetNonceUpdateHistoryIdDueToRent.toString())
-  if (assetNonceUpdateHistory) {
-    assetNonceUpdateHistory.type = 'RENT'
-    assetNonceUpdateHistory.save()
+  let lastAssetNonceUpdateHistoryId = getIndexesUpdatesHistoryNextCount().value.minus(BigInt.fromI32(1))
+  let secondFromLastAssetNonceUpdateHistoryId = getIndexesUpdatesHistoryNextCount().value.minus(BigInt.fromI32(2))
+  let lastAssetNonceUpdateHistory = IndexesUpdateAssetHistory.load(lastAssetNonceUpdateHistoryId.toString())
+  let secondFromLastAssetNonceUpdateHistory = IndexesUpdateAssetHistory.load(secondFromLastAssetNonceUpdateHistoryId.toString())
+  if (lastAssetNonceUpdateHistory && secondFromLastAssetNonceUpdateHistory) {
+    lastAssetNonceUpdateHistory.type = 'RENT'
+    secondFromLastAssetNonceUpdateHistory.type = 'RENT'
+    lastAssetNonceUpdateHistory.save()
+    secondFromLastAssetNonceUpdateHistory.save()
   }
 
   rental.save()

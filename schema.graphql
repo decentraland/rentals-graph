@@ -31,7 +31,7 @@ enum IndexUpdateType @entity {
   ASSET
 }
 
-enum IndexUpdateEventType @entity {
+enum IndexUpdateEventType {
   RENT
   CANCEL
 }
