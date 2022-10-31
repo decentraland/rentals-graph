@@ -31,6 +31,11 @@ enum IndexUpdateType @entity {
   ASSET
 }
 
+enum IndexUpdateEventType @entity {
+  RENT
+  CANCEL
+}
+
 type IndexesUpdateHistory @entity {
   id: ID!
   type: IndexUpdateType!
@@ -59,6 +64,7 @@ type IndexesUpdateAssetHistory @entity {
   signer: String!
   tokenId: BigInt!
   contractAddress: String!
+  type: IndexUpdateEventType!
 }
 
 # This entity is used to track nft contracts being used for rentals.

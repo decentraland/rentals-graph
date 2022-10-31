@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prefer-const */
+import { BigInt } from '@graphprotocol/graph-ts'
 import { Address, log } from '@graphprotocol/graph-ts'
 import { getAllRentalsNextCount, getIndexesUpdatesHistoryNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
 import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
@@ -53,6 +54,13 @@ export function handleAssetRented(event: AssetRented): void {
   if (currentRental) {
     currentRental.isActive = false
     currentRental.save()
+  }
+
+  let assetNonceUpdateHistoryIdDueToRent = getIndexesUpdatesHistoryNextCount().value.minus(BigInt.fromI32(1))
+  let assetNonceUpdateHistory = IndexesUpdateAssetHistory.load(assetNonceUpdateHistoryIdDueToRent.toString())
+  if (assetNonceUpdateHistory) {
+    assetNonceUpdateHistory.type = 'RENT'
+    assetNonceUpdateHistory.save()
   }
 
   rental.save()
@@ -160,6 +168,7 @@ export function handleAssetIndexUpdated(event: AssetIndexUpdated): void {
   updateHistory.singerUpdate = null
   updateHistory.contractUpdate = null
   let assetUpdateHistory = new IndexesUpdateAssetHistory(updateHistory.id)
+  assetUpdateHistory.type = 'CANCEL'
   assetUpdateHistory.newIndex = event.params._newIndex
   assetUpdateHistory.signer = event.params._signer.toHexString()
   assetUpdateHistory.tokenId = event.params._tokenId
