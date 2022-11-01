@@ -2,7 +2,13 @@
 /* eslint-disable prefer-const */
 import { BigInt } from '@graphprotocol/graph-ts'
 import { Address, log } from '@graphprotocol/graph-ts'
-import { getAllRentalsNextCount, getIndexesUpdatesHistoryNextCount, getRentalsCount, getRentalsNextCount } from '../modules/count'
+import {
+  getAllRentalsNextCount,
+  getIndexesUpdatesHistoryCount,
+  getIndexesUpdatesHistoryNextCount,
+  getRentalsCount,
+  getRentalsNextCount,
+} from '../modules/count'
 import { buildRentalId, DAY_TIMESTAMP } from '../modules/rentals'
 import {
   IndexesUpdateAssetHistory,
@@ -56,8 +62,8 @@ export function handleAssetRented(event: AssetRented): void {
     currentRental.save()
   }
 
-  let lastAssetNonceUpdateHistoryId = getIndexesUpdatesHistoryNextCount().value.minus(BigInt.fromI32(1))
-  let secondFromLastAssetNonceUpdateHistoryId = getIndexesUpdatesHistoryNextCount().value.minus(BigInt.fromI32(2))
+  let lastAssetNonceUpdateHistoryId = getIndexesUpdatesHistoryCount().value
+  let secondFromLastAssetNonceUpdateHistoryId = getIndexesUpdatesHistoryCount().value.minus(BigInt.fromI32(1))
   let lastAssetNonceUpdateHistory = IndexesUpdateAssetHistory.load(lastAssetNonceUpdateHistoryId.toString())
   let secondFromLastAssetNonceUpdateHistory = IndexesUpdateAssetHistory.load(secondFromLastAssetNonceUpdateHistoryId.toString())
   if (lastAssetNonceUpdateHistory && secondFromLastAssetNonceUpdateHistory) {
