@@ -521,6 +521,15 @@ export class IndexesUpdateAssetHistory extends Entity {
   set contractAddress(value: string) {
     this.set("contractAddress", Value.fromString(value));
   }
+
+  get type(): string {
+    let value = this.get("type");
+    return value!.toString();
+  }
+
+  set type(value: string) {
+    this.set("type", Value.fromString(value));
+  }
 }
 
 export class Rentable extends Entity {
