@@ -115,37 +115,34 @@ export function handleAssetRented(event: AssetRented): void {
 
   // AnalyticsDayData
 
-  let secondsInDay = 86400
-  let analyticsDayDataIdI32 = event.block.timestamp.toI32() / secondsInDay
-  let analyticsDayDataId = analyticsDayDataIdI32.toString()
-  let analyticsDayData = AnalyticsDayData.load(analyticsDayDataId)
-
-  if (analyticsDayData == null) {
-    analyticsDayData = new AnalyticsDayData(analyticsDayDataId)
-    analyticsDayData.date = analyticsDayDataIdI32 * secondsInDay
-    analyticsDayData.sales = 0
-    analyticsDayData.volume = BigInt.fromI32(0)
-    analyticsDayData.creatorsEarnings = BigInt.fromI32(0)
-    analyticsDayData.daoEarnings = BigInt.fromI32(0)
-  }
-
   let globalId = 'global'
   let global = Global.load(globalId)
 
-  if (global == null) {
-    log.error('Global entity does not exist', [])
-    return
+  if (global != null) {
+    let secondsInDay = 86400
+    let analyticsDayDataIdI32 = event.block.timestamp.toI32() / secondsInDay
+    let analyticsDayDataId = analyticsDayDataIdI32.toString()
+    let analyticsDayData = AnalyticsDayData.load(analyticsDayDataId)
+
+    if (analyticsDayData == null) {
+      analyticsDayData = new AnalyticsDayData(analyticsDayDataId)
+      analyticsDayData.date = analyticsDayDataIdI32 * secondsInDay
+      analyticsDayData.sales = 0
+      analyticsDayData.volume = BigInt.fromI32(0)
+      analyticsDayData.creatorsEarnings = BigInt.fromI32(0)
+      analyticsDayData.daoEarnings = BigInt.fromI32(0)
+    }
+
+    let volume = rental.rentalDays.times(rental.pricePerDay)
+    let daoEarnings = volume.times(global.fee).div(BigInt.fromI32(1_000_000))
+
+    analyticsDayData.sales += 1
+    analyticsDayData.volume = analyticsDayData.volume.plus(volume)
+    analyticsDayData.creatorsEarnings = analyticsDayData.creatorsEarnings.plus(volume.minus(daoEarnings))
+    analyticsDayData.daoEarnings = analyticsDayData.daoEarnings.plus(daoEarnings)
+
+    analyticsDayData.save()
   }
-
-  let volume = rental.rentalDays.times(rental.pricePerDay)
-  let daoEarnings = volume.times(global.fee).div(BigInt.fromI32(1_000_000))
-
-  analyticsDayData.sales += 1
-  analyticsDayData.volume = analyticsDayData.volume.plus(volume)
-  analyticsDayData.creatorsEarnings = analyticsDayData.creatorsEarnings.plus(volume.minus(daoEarnings))
-  analyticsDayData.daoEarnings = analyticsDayData.daoEarnings.plus(daoEarnings)
-
-  analyticsDayData.save()
 }
 
 export function handleAssetClaimed(event: AssetClaimed): void {
