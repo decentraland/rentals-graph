@@ -12,6 +12,7 @@ type Rental @entity {
   pricePerDay: BigInt!
   sender: String!
   ownerHasClaimedAsset: Boolean!
+  claimedAt: BigInt
   isExtension: Boolean!
   isActive: Boolean!
   signature: String!
@@ -84,4 +85,5 @@ type RentalAsset @entity {
   lessor: Bytes
   # Determines if the asset has been transferred out of the rentals contract through a claim.
   isClaimed: Boolean!
+  claimedAt: BigInt
 }
