@@ -100,6 +100,7 @@ export function handleAssetRented(event: AssetRented): void {
   rentalAsset.tokenId = tokenId
   rentalAsset.lessor = Address.fromHexString(rental.lessor)
   rentalAsset.isClaimed = false
+  rentalAsset.claimedAt = null
 
   rentalAsset.save()
 }
@@ -119,6 +120,7 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   rental.isActive = false
   rental.ownerHasClaimedAsset = true
   rental.updatedAt = event.block.timestamp
+  rental.claimedAt = event.block.timestamp
   rental.save()
 
   let rentalAssetId = contractAddress + '-' + tokenId.toString()
@@ -129,6 +131,7 @@ export function handleAssetClaimed(event: AssetClaimed): void {
   } else {
     rentalAsset.lessor = null
     rentalAsset.isClaimed = true
+    rentalAsset.claimedAt = event.block.timestamp
 
     rentalAsset.save()
   }

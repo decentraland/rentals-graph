@@ -150,6 +150,23 @@ export class Rental extends Entity {
     this.set("ownerHasClaimedAsset", Value.fromBoolean(value));
   }
 
+  get claimedAt(): BigInt | null {
+    let value = this.get("claimedAt");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set claimedAt(value: BigInt | null) {
+    if (!value) {
+      this.unset("claimedAt");
+    } else {
+      this.set("claimedAt", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
   get isExtension(): boolean {
     let value = this.get("isExtension");
     return value!.toBoolean();
@@ -637,5 +654,22 @@ export class RentalAsset extends Entity {
 
   set isClaimed(value: boolean) {
     this.set("isClaimed", Value.fromBoolean(value));
+  }
+
+  get claimedAt(): BigInt | null {
+    let value = this.get("claimedAt");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set claimedAt(value: BigInt | null) {
+    if (!value) {
+      this.unset("claimedAt");
+    } else {
+      this.set("claimedAt", Value.fromBigInt(<BigInt>value));
+    }
   }
 }
