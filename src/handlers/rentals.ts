@@ -18,8 +18,17 @@ import {
   Rental,
   Rentable,
   RentalAsset,
+  AnalyticsDayData,
+  Global,
 } from '../entities/schema'
-import { AssetRented, AssetClaimed, ContractIndexUpdated, SignerIndexUpdated, AssetIndexUpdated } from '../entities/Rentals/Rentals'
+import {
+  AssetRented,
+  AssetClaimed,
+  ContractIndexUpdated,
+  SignerIndexUpdated,
+  AssetIndexUpdated,
+  FeeUpdated,
+} from '../entities/Rentals/Rentals'
 import { Rentable as RentableTemplate } from '../entities/templates'
 
 export function handleAssetRented(event: AssetRented): void {
@@ -103,6 +112,40 @@ export function handleAssetRented(event: AssetRented): void {
   rentalAsset.claimedAt = null
 
   rentalAsset.save()
+
+  // AnalyticsDayData
+
+  let secondsInDay = 86400
+  let analyticsDayDataIdI32 = event.block.timestamp.toI32() / secondsInDay
+  let analyticsDayDataId = analyticsDayDataIdI32.toString()
+  let analyticsDayData = AnalyticsDayData.load(analyticsDayDataId)
+
+  if (analyticsDayData == null) {
+    analyticsDayData = new AnalyticsDayData(analyticsDayDataId)
+    analyticsDayData.date = analyticsDayDataIdI32 * secondsInDay
+    analyticsDayData.sales = 0
+    analyticsDayData.volume = BigInt.fromI32(0)
+    analyticsDayData.creatorsEarnings = BigInt.fromI32(0)
+    analyticsDayData.daoEarnings = BigInt.fromI32(0)
+  }
+
+  let globalId = 'global'
+  let global = Global.load(globalId)
+
+  if (global == null) {
+    log.error('Global entity does not exist', [])
+    return
+  }
+
+  let volume = rental.rentalDays.times(rental.pricePerDay)
+  let daoEarnings = volume.times(global.fee).div(BigInt.fromI32(1_000_000))
+
+  analyticsDayData.sales += 1
+  analyticsDayData.volume = analyticsDayData.volume.plus(volume)
+  analyticsDayData.creatorsEarnings = analyticsDayData.creatorsEarnings.plus(volume.minus(daoEarnings))
+  analyticsDayData.daoEarnings = analyticsDayData.daoEarnings.plus(daoEarnings)
+
+  analyticsDayData.save()
 }
 
 export function handleAssetClaimed(event: AssetClaimed): void {
@@ -190,4 +233,18 @@ export function handleAssetIndexUpdated(event: AssetIndexUpdated): void {
   assetUpdateHistory.save()
   updateHistory.save()
   count.save()
+}
+
+export function handleFeeUpdated(event: FeeUpdated): void {
+  let globalId = 'global'
+  let global = Global.load(globalId)
+
+  if (!global) {
+    global = new Global(globalId)
+    global.fee = BigInt.fromI32(0)
+  }
+
+  global.fee = event.params._to
+
+  global.save()
 }

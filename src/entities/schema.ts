@@ -673,3 +673,123 @@ export class RentalAsset extends Entity {
     }
   }
 }
+
+export class Global extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Global entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Global must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Global", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Global | null {
+    return changetype<Global | null>(store.get("Global", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get fee(): BigInt {
+    let value = this.get("fee");
+    return value!.toBigInt();
+  }
+
+  set fee(value: BigInt) {
+    this.set("fee", Value.fromBigInt(value));
+  }
+}
+
+export class AnalyticsDayData extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save AnalyticsDayData entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type AnalyticsDayData must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("AnalyticsDayData", id.toString(), this);
+    }
+  }
+
+  static load(id: string): AnalyticsDayData | null {
+    return changetype<AnalyticsDayData | null>(
+      store.get("AnalyticsDayData", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get date(): i32 {
+    let value = this.get("date");
+    return value!.toI32();
+  }
+
+  set date(value: i32) {
+    this.set("date", Value.fromI32(value));
+  }
+
+  get sales(): i32 {
+    let value = this.get("sales");
+    return value!.toI32();
+  }
+
+  set sales(value: i32) {
+    this.set("sales", Value.fromI32(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get("volume");
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set("volume", Value.fromBigInt(value));
+  }
+
+  get creatorsEarnings(): BigInt {
+    let value = this.get("creatorsEarnings");
+    return value!.toBigInt();
+  }
+
+  set creatorsEarnings(value: BigInt) {
+    this.set("creatorsEarnings", Value.fromBigInt(value));
+  }
+
+  get daoEarnings(): BigInt {
+    let value = this.get("daoEarnings");
+    return value!.toBigInt();
+  }
+
+  set daoEarnings(value: BigInt) {
+    this.set("daoEarnings", Value.fromBigInt(value));
+  }
+}
