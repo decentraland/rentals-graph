@@ -88,17 +88,26 @@ type RentalAsset @entity {
   claimedAt: BigInt
 }
 
+# Stores the current state of the Rentals contract
 type Global @entity {
+  # 'global'
   id: ID!
+  # The fee per 1_000_000 MANA of the rental price that goes to the DAO
   fee: BigInt!
 }
 
 # Data accumulated and condensed into day stats for all of the Marketplace activity
 type AnalyticsDayData @entity {
-  id: ID! # timestamp rounded to current day by dividing by 86400
+  # Current day since epoch start (Obtained by doing timestamp / 86400)
+  id: ID!
+  # Timestamp of the Day
   date: Int!
+  # Amount of rentals made in the day.
   sales: Int!
+  # Amount of MANA spent in the day in rentals
   volume: BigInt!
+  # Amount of MANA that lessors earned in the day
   creatorsEarnings: BigInt!
+  # Amount of MANA that the DAO earned in the day
   daoEarnings: BigInt!
 }
