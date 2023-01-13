@@ -713,6 +713,42 @@ export class Global extends Entity {
   set fee(value: BigInt) {
     this.set("fee", Value.fromBigInt(value));
   }
+
+  get rentals(): i32 {
+    let value = this.get("rentals");
+    return value!.toI32();
+  }
+
+  set rentals(value: i32) {
+    this.set("rentals", Value.fromI32(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get("volume");
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set("volume", Value.fromBigInt(value));
+  }
+
+  get lessorEarnings(): BigInt {
+    let value = this.get("lessorEarnings");
+    return value!.toBigInt();
+  }
+
+  set lessorEarnings(value: BigInt) {
+    this.set("lessorEarnings", Value.fromBigInt(value));
+  }
+
+  get feeCollectorEarnings(): BigInt {
+    let value = this.get("feeCollectorEarnings");
+    return value!.toBigInt();
+  }
+
+  set feeCollectorEarnings(value: BigInt) {
+    this.set("feeCollectorEarnings", Value.fromBigInt(value));
+  }
 }
 
 export class AnalyticsDayData extends Entity {

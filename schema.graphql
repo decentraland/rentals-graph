@@ -88,12 +88,20 @@ type RentalAsset @entity {
   claimedAt: BigInt
 }
 
-# Stores the current state of the Rentals contract
+# Track of global values that do not require multiple entities
 type Global @entity {
   # 'global'
   id: ID!
-  # The fee per 1_000_000 MANA of the rental price that goes to the DAO
+  # The fee per 1_000_000 ERC20 tokens of the rental price that goes to the Fee Collector
   fee: BigInt!
+  # Amount of rentals made since the beginning
+  rentals: Int!
+  # Amount of ERC20 tokens spent in rentals since the beginning
+  volume: BigInt!
+  # Amount of ERC20 tokens that lessors earned since the beginning
+  lessorEarnings: BigInt!
+  # Amount of ERC20 tokens that the Fee Collector earned since the beginning
+  feeCollectorEarnings: BigInt!
 }
 
 # Data accumulated and condensed into day stats for all of the Marketplace activity
@@ -104,10 +112,10 @@ type AnalyticsDayData @entity {
   date: Int!
   # Amount of rentals made in the day.
   rentals: Int!
-  # Amount of MANA spent in the day in rentals
+  # Amount of ERC20 tokens spent in the day in rentals
   volume: BigInt!
-  # Amount of MANA that lessors earned in the day
+  # Amount of ERC20 tokens that lessors earned in the day
   lessorEarnings: BigInt!
-  # Amount of MANA that the Fee Collector earned in the day
+  # Amount of ERC20 tokens that the Fee Collector earned in the day
   feeCollectorEarnings: BigInt!
 }

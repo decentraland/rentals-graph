@@ -142,6 +142,13 @@ export function handleAssetRented(event: AssetRented): void {
     analyticsDayData.feeCollectorEarnings = analyticsDayData.feeCollectorEarnings.plus(feeCollectorEarnings)
 
     analyticsDayData.save()
+
+    global.rentals += 1
+    global.volume = global.volume.plus(volume)
+    global.lessorEarnings = global.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
+    global.feeCollectorEarnings = global.feeCollectorEarnings.plus(feeCollectorEarnings)
+
+    global.save()
   }
 }
 
@@ -239,6 +246,10 @@ export function handleFeeUpdated(event: FeeUpdated): void {
   if (!global) {
     global = new Global(globalId)
     global.fee = BigInt.fromI32(0)
+    global.rentals = 0
+    global.volume = BigInt.fromI32(0)
+    global.lessorEarnings = BigInt.fromI32(0)
+    global.feeCollectorEarnings = BigInt.fromI32(0)
   }
 
   global.fee = event.params._to
