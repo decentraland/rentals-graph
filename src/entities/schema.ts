@@ -757,13 +757,13 @@ export class AnalyticsDayData extends Entity {
     this.set("date", Value.fromI32(value));
   }
 
-  get sales(): i32 {
-    let value = this.get("sales");
+  get rentals(): i32 {
+    let value = this.get("rentals");
     return value!.toI32();
   }
 
-  set sales(value: i32) {
-    this.set("sales", Value.fromI32(value));
+  set rentals(value: i32) {
+    this.set("rentals", Value.fromI32(value));
   }
 
   get volume(): BigInt {
@@ -775,21 +775,21 @@ export class AnalyticsDayData extends Entity {
     this.set("volume", Value.fromBigInt(value));
   }
 
-  get creatorsEarnings(): BigInt {
-    let value = this.get("creatorsEarnings");
+  get lessorEarnings(): BigInt {
+    let value = this.get("lessorEarnings");
     return value!.toBigInt();
   }
 
-  set creatorsEarnings(value: BigInt) {
-    this.set("creatorsEarnings", Value.fromBigInt(value));
+  set lessorEarnings(value: BigInt) {
+    this.set("lessorEarnings", Value.fromBigInt(value));
   }
 
-  get daoEarnings(): BigInt {
-    let value = this.get("daoEarnings");
+  get feeCollectorEarnings(): BigInt {
+    let value = this.get("feeCollectorEarnings");
     return value!.toBigInt();
   }
 
-  set daoEarnings(value: BigInt) {
-    this.set("daoEarnings", Value.fromBigInt(value));
+  set feeCollectorEarnings(value: BigInt) {
+    this.set("feeCollectorEarnings", Value.fromBigInt(value));
   }
 }

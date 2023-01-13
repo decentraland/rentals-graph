@@ -127,19 +127,19 @@ export function handleAssetRented(event: AssetRented): void {
     if (analyticsDayData == null) {
       analyticsDayData = new AnalyticsDayData(analyticsDayDataId)
       analyticsDayData.date = analyticsDayDataIdI32 * secondsInDay
-      analyticsDayData.sales = 0
+      analyticsDayData.rentals = 0
       analyticsDayData.volume = BigInt.fromI32(0)
-      analyticsDayData.creatorsEarnings = BigInt.fromI32(0)
-      analyticsDayData.daoEarnings = BigInt.fromI32(0)
+      analyticsDayData.lessorEarnings = BigInt.fromI32(0)
+      analyticsDayData.feeCollectorEarnings = BigInt.fromI32(0)
     }
 
     let volume = rental.rentalDays.times(rental.pricePerDay)
-    let daoEarnings = volume.times(global.fee).div(BigInt.fromI32(1_000_000))
+    let feeCollectorEarnings = volume.times(global.fee).div(BigInt.fromI32(1_000_000))
 
-    analyticsDayData.sales += 1
+    analyticsDayData.rentals += 1
     analyticsDayData.volume = analyticsDayData.volume.plus(volume)
-    analyticsDayData.creatorsEarnings = analyticsDayData.creatorsEarnings.plus(volume.minus(daoEarnings))
-    analyticsDayData.daoEarnings = analyticsDayData.daoEarnings.plus(daoEarnings)
+    analyticsDayData.lessorEarnings = analyticsDayData.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
+    analyticsDayData.feeCollectorEarnings = analyticsDayData.feeCollectorEarnings.plus(feeCollectorEarnings)
 
     analyticsDayData.save()
   }

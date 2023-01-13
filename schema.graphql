@@ -103,11 +103,11 @@ type AnalyticsDayData @entity {
   # Timestamp of the Day
   date: Int!
   # Amount of rentals made in the day.
-  sales: Int!
+  rentals: Int!
   # Amount of MANA spent in the day in rentals
   volume: BigInt!
   # Amount of MANA that lessors earned in the day
-  creatorsEarnings: BigInt!
-  # Amount of MANA that the DAO earned in the day
-  daoEarnings: BigInt!
+  lessorEarnings: BigInt!
+  # Amount of MANA that the Fee Collector earned in the day
+  feeCollectorEarnings: BigInt!
 }
