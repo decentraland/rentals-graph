@@ -18,8 +18,6 @@ import {
   Rental,
   Rentable,
   RentalAsset,
-  AnalyticsDayData,
-  Global,
 } from '../entities/schema'
 import {
   AssetRented,
@@ -30,6 +28,9 @@ import {
   FeeUpdated,
 } from '../entities/Rentals/Rentals'
 import { Rentable as RentableTemplate } from '../entities/templates'
+import { getAnalyticsTotalData } from '../modules/analyticsTotalData'
+import { getAnalyticsDayData } from '../modules/analyticsDayData'
+import { getRentalsContract } from '../modules/rentalsContracts'
 
 export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
@@ -113,43 +114,34 @@ export function handleAssetRented(event: AssetRented): void {
 
   rentalAsset.save()
 
-  // AnalyticsDayData
+  // Analytics
 
-  let globalId = 'global'
-  let global = Global.load(globalId)
+  let rentalsContract = getRentalsContract()
 
-  if (global != null) {
-    let secondsInDay = 86400
-    let analyticsDayDataIdI32 = event.block.timestamp.toI32() / secondsInDay
-    let analyticsDayDataId = analyticsDayDataIdI32.toString()
-    let analyticsDayData = AnalyticsDayData.load(analyticsDayDataId)
+  let volume = rental.rentalDays.times(rental.pricePerDay)
+  let feeCollectorEarnings = volume.times(rentalsContract.fee).div(BigInt.fromI32(1_000_000))
 
-    if (analyticsDayData == null) {
-      analyticsDayData = new AnalyticsDayData(analyticsDayDataId)
-      analyticsDayData.date = analyticsDayDataIdI32 * secondsInDay
-      analyticsDayData.rentals = 0
-      analyticsDayData.volume = BigInt.fromI32(0)
-      analyticsDayData.lessorEarnings = BigInt.fromI32(0)
-      analyticsDayData.feeCollectorEarnings = BigInt.fromI32(0)
-    }
+  // - AnalyticsDayData
 
-    let volume = rental.rentalDays.times(rental.pricePerDay)
-    let feeCollectorEarnings = volume.times(global.fee).div(BigInt.fromI32(1_000_000))
+  let analyticsDayData = getAnalyticsDayData(event)
 
-    analyticsDayData.rentals += 1
-    analyticsDayData.volume = analyticsDayData.volume.plus(volume)
-    analyticsDayData.lessorEarnings = analyticsDayData.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
-    analyticsDayData.feeCollectorEarnings = analyticsDayData.feeCollectorEarnings.plus(feeCollectorEarnings)
+  analyticsDayData.rentals += 1
+  analyticsDayData.volume = analyticsDayData.volume.plus(volume)
+  analyticsDayData.lessorEarnings = analyticsDayData.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
+  analyticsDayData.feeCollectorEarnings = analyticsDayData.feeCollectorEarnings.plus(feeCollectorEarnings)
 
-    analyticsDayData.save()
+  analyticsDayData.save()
 
-    global.rentals += 1
-    global.volume = global.volume.plus(volume)
-    global.lessorEarnings = global.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
-    global.feeCollectorEarnings = global.feeCollectorEarnings.plus(feeCollectorEarnings)
+  // - AnalyticsTotalData
 
-    global.save()
-  }
+  let analyticsTotalData = getAnalyticsTotalData()
+
+  analyticsTotalData.rentals += 1
+  analyticsTotalData.volume = analyticsTotalData.volume.plus(volume)
+  analyticsTotalData.lessorEarnings = analyticsTotalData.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
+  analyticsTotalData.feeCollectorEarnings = analyticsTotalData.feeCollectorEarnings.plus(feeCollectorEarnings)
+
+  analyticsTotalData.save()
 }
 
 export function handleAssetClaimed(event: AssetClaimed): void {
@@ -240,19 +232,9 @@ export function handleAssetIndexUpdated(event: AssetIndexUpdated): void {
 }
 
 export function handleFeeUpdated(event: FeeUpdated): void {
-  let globalId = 'global'
-  let global = Global.load(globalId)
+  let rentalsContracts = getRentalsContract()
 
-  if (!global) {
-    global = new Global(globalId)
-    global.fee = BigInt.fromI32(0)
-    global.rentals = 0
-    global.volume = BigInt.fromI32(0)
-    global.lessorEarnings = BigInt.fromI32(0)
-    global.feeCollectorEarnings = BigInt.fromI32(0)
-  }
+  rentalsContracts.fee = event.params._to
 
-  global.fee = event.params._to
-
-  global.save()
+  rentalsContracts.save()
 }

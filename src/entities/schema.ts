@@ -674,7 +674,7 @@ export class RentalAsset extends Entity {
   }
 }
 
-export class Global extends Entity {
+export class RentalsContract extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -682,18 +682,18 @@ export class Global extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Global entity without an ID");
+    assert(id != null, "Cannot save RentalsContract entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Global must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type RentalsContract must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("Global", id.toString(), this);
+      store.set("RentalsContract", id.toString(), this);
     }
   }
 
-  static load(id: string): Global | null {
-    return changetype<Global | null>(store.get("Global", id));
+  static load(id: string): RentalsContract | null {
+    return changetype<RentalsContract | null>(store.get("RentalsContract", id));
   }
 
   get id(): string {
@@ -712,6 +712,40 @@ export class Global extends Entity {
 
   set fee(value: BigInt) {
     this.set("fee", Value.fromBigInt(value));
+  }
+}
+
+export class AnalyticsTotalData extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save AnalyticsTotalData entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type AnalyticsTotalData must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("AnalyticsTotalData", id.toString(), this);
+    }
+  }
+
+  static load(id: string): AnalyticsTotalData | null {
+    return changetype<AnalyticsTotalData | null>(
+      store.get("AnalyticsTotalData", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get rentals(): i32 {

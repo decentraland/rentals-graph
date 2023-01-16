@@ -89,18 +89,23 @@ type RentalAsset @entity {
 }
 
 # Track of global values that do not require multiple entities
-type Global @entity {
-  # 'global'
+type RentalsContract @entity {
+  # 'rentals-contract'
   id: ID!
   # The fee per 1_000_000 ERC20 tokens of the rental price that goes to the Fee Collector
   fee: BigInt!
-  # Amount of rentals made since the beginning
+}
+
+type AnalyticsTotalData @entity {
+  # "analytics-total-data"
+  id: ID!
+  # Amount of rentals made in total.
   rentals: Int!
-  # Amount of ERC20 tokens spent in rentals since the beginning
+  # Amount of ERC20 tokens spent in total
   volume: BigInt!
-  # Amount of ERC20 tokens that lessors earned since the beginning
+  # Amount of ERC20 tokens that lessors earned in total
   lessorEarnings: BigInt!
-  # Amount of ERC20 tokens that the Fee Collector earned since the beginning
+  # Amount of ERC20 tokens that the Fee Collector earned in total
   feeCollectorEarnings: BigInt!
 }
 
