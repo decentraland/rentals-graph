@@ -87,3 +87,40 @@ type RentalAsset @entity {
   isClaimed: Boolean!
   claimedAt: BigInt
 }
+
+# Track of global values that do not require multiple entities
+type RentalsContract @entity {
+  # 'rentals-contract'
+  id: ID!
+  # The fee per 1_000_000 ERC20 tokens of the rental price that goes to the Fee Collector
+  fee: BigInt!
+}
+
+type AnalyticsTotalData @entity {
+  # "analytics-total-data"
+  id: ID!
+  # Amount of rentals made in total.
+  rentals: Int!
+  # Amount of ERC20 tokens spent in total
+  volume: BigInt!
+  # Amount of ERC20 tokens that lessors earned in total
+  lessorEarnings: BigInt!
+  # Amount of ERC20 tokens that the Fee Collector earned in total
+  feeCollectorEarnings: BigInt!
+}
+
+# Data accumulated and condensed into day stats for all of the Marketplace activity
+type AnalyticsDayData @entity {
+  # Current day since epoch start (Obtained by doing timestamp / 86400)
+  id: ID!
+  # Timestamp of the Day
+  date: Int!
+  # Amount of rentals made in the day.
+  rentals: Int!
+  # Amount of ERC20 tokens spent in the day in rentals
+  volume: BigInt!
+  # Amount of ERC20 tokens that lessors earned in the day
+  lessorEarnings: BigInt!
+  # Amount of ERC20 tokens that the Fee Collector earned in the day
+  feeCollectorEarnings: BigInt!
+}

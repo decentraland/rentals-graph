@@ -673,3 +673,193 @@ export class RentalAsset extends Entity {
     }
   }
 }
+
+export class RentalsContract extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save RentalsContract entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type RentalsContract must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("RentalsContract", id.toString(), this);
+    }
+  }
+
+  static load(id: string): RentalsContract | null {
+    return changetype<RentalsContract | null>(store.get("RentalsContract", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get fee(): BigInt {
+    let value = this.get("fee");
+    return value!.toBigInt();
+  }
+
+  set fee(value: BigInt) {
+    this.set("fee", Value.fromBigInt(value));
+  }
+}
+
+export class AnalyticsTotalData extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save AnalyticsTotalData entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type AnalyticsTotalData must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("AnalyticsTotalData", id.toString(), this);
+    }
+  }
+
+  static load(id: string): AnalyticsTotalData | null {
+    return changetype<AnalyticsTotalData | null>(
+      store.get("AnalyticsTotalData", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get rentals(): i32 {
+    let value = this.get("rentals");
+    return value!.toI32();
+  }
+
+  set rentals(value: i32) {
+    this.set("rentals", Value.fromI32(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get("volume");
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set("volume", Value.fromBigInt(value));
+  }
+
+  get lessorEarnings(): BigInt {
+    let value = this.get("lessorEarnings");
+    return value!.toBigInt();
+  }
+
+  set lessorEarnings(value: BigInt) {
+    this.set("lessorEarnings", Value.fromBigInt(value));
+  }
+
+  get feeCollectorEarnings(): BigInt {
+    let value = this.get("feeCollectorEarnings");
+    return value!.toBigInt();
+  }
+
+  set feeCollectorEarnings(value: BigInt) {
+    this.set("feeCollectorEarnings", Value.fromBigInt(value));
+  }
+}
+
+export class AnalyticsDayData extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save AnalyticsDayData entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type AnalyticsDayData must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("AnalyticsDayData", id.toString(), this);
+    }
+  }
+
+  static load(id: string): AnalyticsDayData | null {
+    return changetype<AnalyticsDayData | null>(
+      store.get("AnalyticsDayData", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get date(): i32 {
+    let value = this.get("date");
+    return value!.toI32();
+  }
+
+  set date(value: i32) {
+    this.set("date", Value.fromI32(value));
+  }
+
+  get rentals(): i32 {
+    let value = this.get("rentals");
+    return value!.toI32();
+  }
+
+  set rentals(value: i32) {
+    this.set("rentals", Value.fromI32(value));
+  }
+
+  get volume(): BigInt {
+    let value = this.get("volume");
+    return value!.toBigInt();
+  }
+
+  set volume(value: BigInt) {
+    this.set("volume", Value.fromBigInt(value));
+  }
+
+  get lessorEarnings(): BigInt {
+    let value = this.get("lessorEarnings");
+    return value!.toBigInt();
+  }
+
+  set lessorEarnings(value: BigInt) {
+    this.set("lessorEarnings", Value.fromBigInt(value));
+  }
+
+  get feeCollectorEarnings(): BigInt {
+    let value = this.get("feeCollectorEarnings");
+    return value!.toBigInt();
+  }
+
+  set feeCollectorEarnings(value: BigInt) {
+    this.set("feeCollectorEarnings", Value.fromBigInt(value));
+  }
+}

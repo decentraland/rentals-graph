@@ -35,6 +35,8 @@ dataSources:
           handler: handleSignerIndexUpdated
         - event: AssetIndexUpdated(indexed address,indexed address,indexed uint256,uint256,address)
           handler: handleAssetIndexUpdated
+        - event: FeeUpdated(uint256,uint256,address)
+          handler: handleFeeUpdated
           
 templates:
   # ---------------------------------------------------------

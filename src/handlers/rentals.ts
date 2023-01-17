@@ -19,8 +19,18 @@ import {
   Rentable,
   RentalAsset,
 } from '../entities/schema'
-import { AssetRented, AssetClaimed, ContractIndexUpdated, SignerIndexUpdated, AssetIndexUpdated } from '../entities/Rentals/Rentals'
+import {
+  AssetRented,
+  AssetClaimed,
+  ContractIndexUpdated,
+  SignerIndexUpdated,
+  AssetIndexUpdated,
+  FeeUpdated,
+} from '../entities/Rentals/Rentals'
 import { Rentable as RentableTemplate } from '../entities/templates'
+import { getAnalyticsTotalData } from '../modules/analyticsTotalData'
+import { getAnalyticsDayData } from '../modules/analyticsDayData'
+import { getRentalsContract } from '../modules/rentalsContracts'
 
 export function handleAssetRented(event: AssetRented): void {
   let contractAddress = event.params._contractAddress.toHexString()
@@ -103,6 +113,35 @@ export function handleAssetRented(event: AssetRented): void {
   rentalAsset.claimedAt = null
 
   rentalAsset.save()
+
+  // Analytics
+
+  let rentalsContract = getRentalsContract()
+
+  let volume = rental.rentalDays.times(rental.pricePerDay)
+  let feeCollectorEarnings = volume.times(rentalsContract.fee).div(BigInt.fromI32(1_000_000))
+
+  // - AnalyticsDayData
+
+  let analyticsDayData = getAnalyticsDayData(event)
+
+  analyticsDayData.rentals += 1
+  analyticsDayData.volume = analyticsDayData.volume.plus(volume)
+  analyticsDayData.lessorEarnings = analyticsDayData.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
+  analyticsDayData.feeCollectorEarnings = analyticsDayData.feeCollectorEarnings.plus(feeCollectorEarnings)
+
+  analyticsDayData.save()
+
+  // - AnalyticsTotalData
+
+  let analyticsTotalData = getAnalyticsTotalData()
+
+  analyticsTotalData.rentals += 1
+  analyticsTotalData.volume = analyticsTotalData.volume.plus(volume)
+  analyticsTotalData.lessorEarnings = analyticsTotalData.lessorEarnings.plus(volume.minus(feeCollectorEarnings))
+  analyticsTotalData.feeCollectorEarnings = analyticsTotalData.feeCollectorEarnings.plus(feeCollectorEarnings)
+
+  analyticsTotalData.save()
 }
 
 export function handleAssetClaimed(event: AssetClaimed): void {
@@ -190,4 +229,12 @@ export function handleAssetIndexUpdated(event: AssetIndexUpdated): void {
   assetUpdateHistory.save()
   updateHistory.save()
   count.save()
+}
+
+export function handleFeeUpdated(event: FeeUpdated): void {
+  let rentalsContracts = getRentalsContract()
+
+  rentalsContracts.fee = event.params._to
+
+  rentalsContracts.save()
 }
